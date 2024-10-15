@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="orderlist" left="0" top="0" width="1002" height="670" titletext="New Form" onload="orderlist_onload">
+    <Layouts>
+      <Layout>
+        <Static id="st_title" taborder="0" text="▣ 카테고리별 주문목록 현황" left="20" width="325" style="font:bold 16 Dotum;" top="20" height="22"/>
+        <Button id="btn_reset" taborder="1" top="20" height="27" style="image:URL('theme://hiclipart.com (1).png');background:#4f81bdff;cursor:hand;" right="20" width="30" onclick="btn_reset_onclick"/>
+        <Grid id="grd_category" taborder="2" left="20" top="52" width="323" binddataset="ds_order_ct" oncellclick="grd_category_oncellclick" autofittype="col" bottom="20">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="184"/>
+                <Column size="134"/>
+              </Columns>
+              <Rows>
+                <Row size="28" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="카테고리 명"/>
+                <Cell col="1" text="상품 수"/>
+              </Band>
+              <Band id="body">
+                <Cell style="align:left;padding:0 0 0 3;" text="bind:CATEGORY_NAME"/>
+                <Cell col="1" style="align:right;padding:0 3 0 0;" text="bind:COUNT"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="Grid01" taborder="3" left="352" top="52" binddataset="ds_order_pt" autofittype="col" bottom="20" right="20">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="267"/>
+                <Column size="92"/>
+                <Column size="119"/>
+                <Column size="152"/>
+              </Columns>
+              <Rows>
+                <Row size="28" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="상품명"/>
+                <Cell col="1" text="상품 개수"/>
+                <Cell col="2" text="누적주문수량"/>
+                <Cell col="3" text="누적 주문가격"/>
+              </Band>
+              <Band id="body">
+                <Cell style="align:left;padding:0 0 0 3;" text="bind:PRODUCT_NAME"/>
+                <Cell col="1" displaytype="number" style="align:right;padding:0 2 0 0;" text="bind:AMOUNT" mask="!999,999,999"/>
+                <Cell col="2" displaytype="number" style="align:right;padding:0 2 0 0;" text="bind:CUM_QUANTITY" mask="!999,999,999"/>
+                <Cell col="3" displaytype="number" style="align:right;padding:0 2 0 0;" text="bind:CUM_PRICE" mask="!999,999,999"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="Button00" taborder="4" text="MENULIST" left="317" top="24" width="80" height="20" onclick="Button00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_category">
+        <ColumnInfo>
+          <Column id="CATEGORY_ID" type="STRING" size="256"/>
+          <Column id="CATEGORY_NAME" type="STRING" size="256"/>
+          <Column id="COUNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_product"/>
+      <Dataset id="ds_order_ct">
+        <ColumnInfo>
+          <Column id="CATEGORY_ID" type="STRING" size="256"/>
+          <Column id="CATEGORY_NAME" type="STRING" size="256"/>
+          <Column id="COUNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_order_pt">
+        <ColumnInfo>
+          <Column id="PRODUCT_ID" type="STRING" size="256"/>
+          <Column id="PRODUCT_NAME" type="STRING" size="256"/>
+          <Column id="AMOUNT" type="STRING" size="256"/>
+          <Column id="CUM_QUANTITY" type="STRING" size="256"/>
+          <Column id="CUM_PRICE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.0"><![CDATA[/*
+화면명 : 재고 등록 팝업 
+작성자 : 김진한
+작성일자 : 2024/09/11
+*/
+
+
+/***************************************************
+* 함수명 : orderlist_onload 
+* 내  용 : 카테고리별 상품 수 가져오기
+****************************************************/
+this.orderlist_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.fn_loadProductByCategory();
+}
+
+/***************************************************
+* 함수명 : fn_loadProductByCategory 
+* 내  용 : 로드 트랜잭션 호출
+****************************************************/
+this.fn_loadProductByCategory = function(){
+	var strSvcId = "loadProductByCategory";
+	var strSvcUrl = "http://localhost:8080/loadProductByCategory";
+	var inData = ""
+	var outData = "ds_order_ct=outDataset";
+	var strAvg = "";
+	var callBackFnc = "fn_Callback_loadProductByCategory";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+
+/***************************************************
+* 함수명 : fn_Callback_loadProductByCategory 
+* 내  용 : (콜백)
+****************************************************/
+this.fn_Callback_loadProductByCategory = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		var selectedRow = this.ds_order_ct.rowposition;
+		this.ds_category.addRow();
+		this.ds_category.copyRow(0, this.ds_order_ct, selectedRow);
+		
+		this.fn_loadProductList();
+	}
+}
+
+
+/***************************************************
+* 함수명 : grd_category_oncellclick 
+* 내  용 : 카테고리 셀 클릭시 모든 제품 리스트 가져오기
+****************************************************/
+this.grd_category_oncellclick = function(obj:Grid, e:nexacro.GridClickEventInfo)
+{
+	// 선택한 행의 데이터 새로운 셋에 담기
+ 	var selectedRow = this.ds_order_ct.rowposition;
+ 	this.ds_category.addRow();
+ 	this.ds_category.copyRow(0, this.ds_order_ct, selectedRow);
+ 	
+	this.fn_loadProductList();
+}
+
+/***************************************************
+* 함수명 : fn_loadProductList 
+* 내  용 : 로드 트랜잭션 호출
+****************************************************/
+this.fn_loadProductList = function(){
+	var strSvcId = "loadProductList";
+	var strSvcUrl = "http://localhost:8080/loadProductList";
+	var inData = "inDataset=ds_category"
+	var outData = "ds_order_pt=outDataset";
+	var strAvg = "";
+	var callBackFnc = "fn_Callback_loadProductList";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+
+/***************************************************
+* 함수명 : fn_Callback_loadProductList 
+* 내  용 : (콜백)
+****************************************************/
+this.fn_Callback_loadProductList = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		trace(strSvcId);
+	}
+}
+
+
+/***************************************************
+* 함수명 : btn_reset_onclick 
+* 내  용 : 주문 목록 데이터 초기화
+****************************************************/
+this.btn_reset_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.ds_order_pt.clearData();
+	var selectedRow = this.ds_order_ct.rowposition;
+	this.grd_category.selectRow(selectedRow, false);
+}
+
+
+this.Button00_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	// 이동할 URL 설정
+    var url = "http://localhost:8080/TestProject/index.html";
+
+    // 또는, 현재 탭에서 열기
+    window.location.href = url; // 현재 탭에서 열기
+}
+]]></Script>
+  </Form>
+</FDL>

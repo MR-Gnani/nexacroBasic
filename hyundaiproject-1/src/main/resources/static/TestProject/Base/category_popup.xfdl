@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="category_popup" left="0" top="0" width="648" height="89" titletext="New Form" onload="category_popup_onload">
+    <Layouts>
+      <Layout>
+        <Static id="st_title" taborder="0" text="▣ 카테고리 관리" left="20" top="11" width="204" height="43" style="font:bold 16 Dotum;"/>
+        <Button id="btn_save" taborder="1" text="저장" top="21" height="24" right="20" width="60" style="background:#4f81bdff;color:#ffffffff;font:9 Dotum;cursor:hand;" onclick="btn_save_onclick"/>
+        <Div id="Div00" taborder="2" text="Div00" left="20" top="48" height="24" right="20" style="border:1 solid #808080ff ;">
+          <Layouts>
+            <Layout width="472" height="39">
+              <Static id="st_categoryName" taborder="0" text="카테고리명" left="0" top="0" width="110" style="background:moccasin;border:1solid solid #808080ff ;align:middle;font:bold 11 Dotum;" bottom="0"/>
+              <Edit id="edt_categoryName" taborder="1" left="111" top="1" oneditclick="Div00_Edit00_oneditclick" bottom="1" maxlength="80" onkeydown="Div00_edt_categoryName_onkeydown" right="1"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_category_val">
+        <ColumnInfo>
+          <Column id="CATEGORY_ID" type="STRING" size="256"/>
+          <Column id="CATEGORY_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_category">
+        <ColumnInfo>
+          <Column id="CATEGORY_ID" type="STRING" size="256"/>
+          <Column id="CATEGORY_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="Div00.edt_categoryName" propid="value" datasetid="ds_category" columnid="CATEGORY_NAME"/>
+    </Bind>
+    <Script type="xscript5.0"><![CDATA[/*
+화면명 : 카테고리 등록 팝업
+작성자 : 김진한
+작성일자 : 2024/09/10
+*/
+
+
+/***************************************************
+* 함수명 : category_popup_onload (팝업 로드)
+* 내  용 : 로드시 product폼에서 카테고리 데이터 셋 가져오기
+****************************************************/
+this.category_popup_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.ds_category_val.copyData(this.opener.ds_category);
+}
+
+/***************************************************
+* 함수명 : btn_save_onclick 
+* 내  용 : 저장 버튼 클릭
+****************************************************/
+this.btn_save_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{	
+	if (this.fn_checkVal()) { // validation check
+		return;
+	}
+	
+	var result = application.confirm("정말로 저장하시겠습니까?","TEST","warning");
+	if (result) {
+		this.fn_save(); 
+	} else {
+		trace("저장 작업 취소");
+	}
+}
+
+/***************************************************
+* 함수명 : fn_checkVal 
+* 내  용 : 유효성 검사
+****************************************************/
+this.fn_checkVal = function() {
+	var categoryName = this.ds_category.getColumn(0, "CATEGORY_NAME")
+	
+    if (categoryName === null || categoryName.trim() === "") {
+        alert("카테고리를 입력해주세요");
+        return true; 
+    }
+	
+	categoryName = categoryName.toUpperCase();
+	
+	var isExist = false;
+	for (var i = 0; i <this.ds_category_val.getRowCount(); i++) {
+		if(this.ds_category_val.getColumn(i, "CATEGORY_NAME") === categoryName) {
+			isExist = true;
+			break;
+		}
+	}
+	if (isExist) {
+        alert("동일한 카테고리명이 존재합니다.");
+        return true; 
+    }
+	
+	return isExist;
+}
+
+/***************************************************
+* 함수명 : fn_save 
+* 내  용 : 저장 트랜잭션
+****************************************************/
+this.fn_save = function() {
+	var strSvcId = "categorySave";
+	var strSvcUrl = "http://localhost:8080/categorySave";
+	var inData = "inDataset=ds_category"
+	var outData = "";
+	var strAvg = "";
+	var callBackFnc = "fn_Callback_Save";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+
+/***************************************************
+* 함수명 : fn_Callback_Save 
+* 내  용 : (콜백)
+****************************************************/
+this.fn_Callback_Save = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		this.close();
+		if(this.opener && typeof this.opener.fn_loadBaseData === 'function') {
+			alert("신규 카테고리가 등록되었습니다.");
+			this.opener.fn_loadBaseData();
+		}
+		
+	}
+}
+
+/***************************************************
+* 함수명 : Div00_edt_categoryName_onkeydown
+* 내  용 : 엔터키 저장 함수
+****************************************************/
+this.Div00_edt_categoryName_onkeydown = function(obj:Edit, e:nexacro.KeyEventInfo)
+{
+	if (e.keycode == 13) {  //엔터키 keycode
+		obj.updateToDataset();
+        this.btn_save_onclick();  
+    }
+}
+]]></Script>
+  </Form>
+</FDL>

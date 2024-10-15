@@ -1,0 +1,774 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="wharehouse" left="0" top="0" width="1002" height="670" titletext="New Form" onload="wharehouse_onload">
+    <Layouts>
+      <Layout>
+        <Div id="div_cond" taborder="17" left="20" top="44" right="20" height="36" style="border:1 solid #808080ff ;">
+          <Layouts>
+            <Layout>
+              <Static id="st_region" taborder="0" text="지역" left="4" top="8" height="20" style="align:right middle;font:9 Dotum;" width="80"/>
+              <Combo id="cbo_region" taborder="1" left="89" top="8" height="20" innerdataset="@ds_region" datacolumn="REGION_NAME" codecolumn="REGION_ID" onitemchanged="div_cond_cbo_region_onitemchanged" width="183"/>
+              <Static id="st_country" taborder="2" text="국가" left="282" top="8" height="20" style="align:right middle;font:9 Dotum;" width="80"/>
+              <Combo id="cbo_country" taborder="3" left="367" top="8" height="20" innerdataset="@ds_country" codecolumn="COUNTRY_ID" datacolumn="COUNTRY_NAME" onitemchanged="div_cond_cbo_country_onitemchanged" width="183"/>
+              <Static id="st_location" taborder="4" text="창고위치" left="577" top="8" height="20" style="align:right middle;font:9 Dotum;" width="80"/>
+              <Combo id="cbo_location" taborder="5" left="662" top="8" height="20" innerdataset="@ds_location" datacolumn="LOCATION_NAME" codecolumn="LOCATION_ID" width="183"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="st_title" taborder="0" text="▣ 창고 목록" left="20" top="10" right="48.84%" height="37" style="background:transparent;font:bold 16 Dotum;" onclick="Static00_onclick"/>
+        <Grid id="grd_houselist" taborder="16" left="20" top="85" right="20" binddataset="ds_house" onheadclick="grd_houselist_onheadclick" oncellclick="grd_houselist_oncellclick" ontextchanged="grd_houselist_ontextchanged" bottom="20" autofittype="col" onselectchanged="grd_houselist_onselectchanged">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="96"/>
+                <Column size="103"/>
+                <Column size="149"/>
+                <Column size="231"/>
+                <Column size="203"/>
+                <Column size="180"/>
+                <Column size="0"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkbox" edittype="checkbox" text="0"/>
+                <Cell col="1" text="관리번호"/>
+                <Cell col="2" displaytype="normal" edittype="combo" text="지역"/>
+                <Cell col="3" edittype="combo" text="국가"/>
+                <Cell col="4" edittype="combo" text="창고위치"/>
+                <Cell col="5" edittype="text" text="창고명"/>
+                <Cell col="6" text="rowtype"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="checkbox" edittype="checkbox" text="bind:CHECK"/>
+                <Cell col="1" text="bind:WAREHOUSE_ID"/>
+                <Cell col="2" displaytype="normal" edittype="expr:dataset.getRowType(currow) == 2 ? 'combo' : 'none'" style="align:left;padding:0 0 0 3;" text="bind:REGION" combodataset="ds_region_grd" combocodecol="REGION_NAME" combodatacol="REGION_NAME" combodisplayrowcount="-1"/>
+                <Cell col="3" edittype="expr:dataset.getRowType(currow) == 2 ? 'combo' : 'none'" style="align:left;padding:0 0 0 3;" text="bind:COUNTRY" combodataset="ds_country_grd" combocodecol="COUNTRY_NAME" combodatacol="COUNTRY_NAME"/>
+                <Cell col="4" edittype="expr:dataset.getRowType(currow) == 2 ? 'combo' : 'none'" style="align:left;padding:0 0 0 3;" text="bind:LOCATION" combodataset="ds_location_grd" combocodecol="LOCATION_NAME" combodatacol="LOCATION_NAME"/>
+                <Cell col="5" edittype="text" style="align:left;padding:0 0 0 3;" text="bind:WAREHOUSE_NAME" editlimit="80"/>
+                <Cell col="6" text="expr:dataset.getRowType(currow)"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="div_top" taborder="18" top="14" height="28" width="471" right="0">
+          <Layouts>
+            <Layout width="388" height="37">
+              <Button id="btn_reset" taborder="0" top="2" height="24" style="image:URL('theme://hiclipart.com (1).png');background:#4f81bdff;border:0solid solid #999999ff ;color:#ffffffff;font:9 Dotum;cursor:hand;" right="268" width="25" onclick="div_top_reset_btn_onclick"/>
+              <Button id="btn_search" taborder="1" text="조회" top="2" height="24" style="background:#4f81bdff;border:0solid solid #999999ff ;color:#ffffffff;font:9 Dotum;cursor:hand;" width="60" right="206" onclick="div_top_search_btn_onclick"/>
+              <Button id="btn_add" taborder="2" text="추가" onclick="div_top_addbtn_onclick" top="2" height="24" style="background:#4f81bdff;border:0solid solid #999999ff ;color:#ffffffff;font:9 Dotum;cursor:hand;" width="60" right="144"/>
+              <Button id="btn_save" taborder="3" text="저장" top="2" height="24" style="background:#4f81bdff;border:1 solid #999999ff ;color:#ffffffff;font:9 Dotum;cursor:hand;" width="60" right="82" onclick="div_top_save_btn_onclick"/>
+              <Button id="btn_delete" taborder="4" text="삭제" onclick="div_top_delete_btn_onclick" top="2" height="24" style="background:#4f81bdff;border:0 solid #808080ff ;color:#ffffffff;font:9 Dotum;cursor:hand;" width="60" right="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="Button00" taborder="19" text="MENULIST" left="150" top="20" height="20" width="80" onclick="Button00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_house" oncolumnchanged="ds_house_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="CHECK" type="STRING" size="256"/>
+          <Column id="WAREHOUSE_ID" type="STRING" size="256"/>
+          <Column id="REGION" type="STRING" size="256"/>
+          <Column id="COUNTRY" type="STRING" size="256"/>
+          <Column id="LOCATION" type="STRING" size="256"/>
+          <Column id="WAREHOUSE_NAME" type="STRING" size="256"/>
+          <Column id="ROWTYPE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_region">
+        <ColumnInfo>
+          <Column id="REGION_ID" type="STRING" size="256"/>
+          <Column id="REGION_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_country">
+        <ColumnInfo>
+          <Column id="COUNTRY_ID" type="STRING" size="256"/>
+          <Column id="COUNTRY_NAME" type="STRING" size="256"/>
+          <Column id="REGION_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_location">
+        <ColumnInfo>
+          <Column id="LOCATION_ID" type="STRING" size="256"/>
+          <Column id="LOCATION_NAME" type="STRING" size="256"/>
+          <Column id="COUNTRY_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_cond">
+        <ColumnInfo>
+          <Column id="condRegion" type="STRING" size="256"/>
+          <Column id="condCountry" type="STRING" size="256"/>
+          <Column id="condLocation" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_region_grd">
+        <ColumnInfo>
+          <Column id="REGION_ID" type="STRING" size="256"/>
+          <Column id="REGION_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_country_grd">
+        <ColumnInfo>
+          <Column id="COUNTRY_ID" type="STRING" size="256"/>
+          <Column id="COUNTRY_NAME" type="STRING" size="256"/>
+          <Column id="REGION_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_location_grd">
+        <ColumnInfo>
+          <Column id="LOCATION_ID" type="STRING" size="256"/>
+          <Column id="LOCATION_NAME" type="STRING" size="256"/>
+          <Column id="COUNTRY_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="Div00.cbo_region" propid="value" datasetid="ds_cond" columnid="condRegion"/>
+      <BindItem id="item1" compid="Div00.cbo_country" propid="value" datasetid="ds_cond" columnid="condCountry"/>
+      <BindItem id="item2" compid="Div00.cbo_location" propid="value" datasetid="ds_cond" columnid="condLocation"/>
+      <BindItem id="item3" compid="div_cond.cbo_region" propid="value" datasetid="ds_cond" columnid="condRegion"/>
+      <BindItem id="item4" compid="div_cond.cbo_country" propid="value" datasetid="ds_cond" columnid="condCountry"/>
+      <BindItem id="item5" compid="div_cond.cbo_location" propid="value" datasetid="ds_cond" columnid="condLocation"/>
+    </Bind>
+    <Script type="xscript5.0"><![CDATA[/*
+화면명 : 창고 목록 조회 수정 저장 삭제 
+작성자 : 김진한
+작성일자 : 2024/09/10
+*/
+
+this.isLoading = true;
+/***************************************************
+* 함수명 : wharehouse_onload (팝업 로드)
+* 내  용 : loadData(트랜잭션 호출), div_top_search_btn_onclick(조회)
+****************************************************/
+this.wharehouse_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{	
+	this.loadData();
+	this.div_top_search_btn_onclick();
+}
+
+/***************************************************
+* 함수명 : loadData 
+* 내  용 : 데이터 로드(트랜잭션 호출)
+****************************************************/
+this.loadData = function(){
+
+	var strSvcId = "loadBasicData";
+	var strSvcUrl = "http://localhost:8080/basicData";
+	var inData = ""
+	var outData = "ds_region=outDataset, ds_region_grd=outDataset, ds_country=outDataset2, ds_country_grd=outDataset2, ds_location=outDataset3, ds_location_grd=outDataset3";
+	var strAvg = "";
+	var callBackFnc = "fn_Callback_Onload";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+
+/***************************************************
+* 함수명 : fn_Callback_Onload 
+* 내  용 : (콜백) 콤보박스 전체&선택 값 셋팅
+****************************************************/
+this.fn_Callback_Onload = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		
+		var existingRegion = this.ds_region.getColumn(0, "REGION_NAME");
+		var existingCountry = this.ds_country.getColumn(0, "COUNTRY_NAME");
+		var existingLocation = this.ds_location.getColumn(0, "LOCATION_NAME");
+		
+		if (existingRegion !== "- 전체 -") {
+            var newRow = this.ds_region.insertRow(0);
+            this.ds_region.setColumn(newRow, "REGION_ID", 0);
+            this.ds_region.setColumn(newRow, "REGION_NAME", "- 전체 -");
+        }
+        if (existingCountry !== "- 전체 -") {
+			var newRow = this.ds_country.insertRow(0);
+			this.ds_country.setColumn(newRow, "COUNTRY_ID", "");
+			this.ds_country.setColumn(newRow, "COUNTRY_NAME", "- 전체 -");
+			this.ds_country.setColumn(newRow, "REGION_ID", 0);
+        }
+        if (existingLocation !== "- 전체 -") {
+			var newRow = this.ds_location.insertRow(0);
+			this.ds_location.setColumn(newRow, "LOCATION_ID", 0);
+			this.ds_location.setColumn(newRow, "LOCATION_NAME", "- 전체 -");
+			this.ds_location.setColumn(newRow, "COUNTRY_ID", 0);
+        }
+        
+        this.div_cond.cbo_region.set_index(0);
+        this.div_cond.cbo_country.set_index(0);
+        this.div_cond.cbo_location.set_index(0);
+        
+        var existingRegion_grd = this.ds_region_grd.getColumn(0, "REGION_NAME");
+		var existingCountry_grd = this.ds_country_grd.getColumn(0, "COUNTRY_NAME");
+		var existingLocation_grd = this.ds_location_grd.getColumn(0, "LOCATION_NAME");
+		
+        if (existingRegion_grd !== "- 선택 -") {
+            var newRow = this.ds_region_grd.insertRow(0);
+            this.ds_region_grd.setColumn(newRow, "REGION_ID", 0);
+            this.ds_region_grd.setColumn(newRow, "REGION_NAME", "- 선택 -");
+        }
+        if (existingCountry_grd !== "- 선택 -") {
+			var newRow = this.ds_country_grd.insertRow(0);
+			this.ds_country_grd.setColumn(newRow, "COUNTRY_ID", "");
+			this.ds_country_grd.setColumn(newRow, "COUNTRY_NAME", "- 선택 -");
+			this.ds_country_grd.setColumn(newRow, "REGION_ID", 0);
+        }
+        if (existingLocation_grd !== "- 선택 -") {
+			var newRow = this.ds_location_grd.insertRow(0);
+			this.ds_location_grd.setColumn(newRow, "LOCATION_ID", 0);
+			this.ds_location_grd.setColumn(newRow, "LOCATION_NAME", "- 선택 -");
+			this.ds_location_grd.setColumn(newRow, "COUNTRY_ID", 0);
+        }
+		
+	}
+}
+
+
+/***************************************************
+* 함수명 : div_top_search_btn_onclick 
+* 내  용 : 조회 버튼 클릭
+****************************************************/
+this.div_top_search_btn_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.fn_search();
+}
+
+/***************************************************
+* 함수명 : fn_search 
+* 내  용 : 조회 트랜잭션
+****************************************************/
+this.fn_search = function() {
+
+	var strSvcId = "loadWareHouseInfo";
+	var strSvcUrl = "http://localhost:8080/warehouseInfo";
+	var inData = "inDataset=ds_cond"
+	var outData = "ds_house=outDataset";
+	var strAvg = "";
+	var callBackFnc = "fn_Callback_Search";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+
+/***************************************************
+* 함수명 : fn_Callback_Search
+* 내  용 : (콜백)
+****************************************************/
+this.fn_Callback_Search = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+ 		this.ds_house.addColumn("CHECK", "STRING");
+/*		var rowCount = this.ds_house.getRowCount();*/
+// 			for (var i = 0; i < rowCount; i++) {
+// 				this.ds_house.setColumn(i, "CHECK", 0);
+// 			}
+		this.isLoading = false;
+	}
+}
+
+
+/***************************************************
+* 함수명 : grd_houselist_oncellclick 
+* 내  용 : 셀 클릭시(체크컬럼만) 체크 상태 값 변경
+****************************************************/
+this.grd_houselist_oncellclick = function(obj:Grid, e:nexacro.GridClickEventInfo)
+{ 	
+	var cell = e.cell
+	var row = e.row
+	if(cell == 0){
+		var currentValue = this.ds_house.getColumn(row, "CHECK");
+		if(this.ds_house.getColumn(row, "CHECK") == 1){
+			trace("체크표시");
+			this.ds_house.setColumn(row, "CHECK", 1);
+		} else {
+			trace("체크해제");
+			this.ds_house.setColumn(row, "CHECK", "");
+		}
+	}
+}
+
+
+/***************************************************
+* 함수명 : div_top_addbtn_onclick
+* 내  용 : 그리드 행 추가 버튼
+****************************************************/
+this.div_top_addbtn_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	var newRow = this.ds_house.addRow(); // 행 추가
+	if(newRow >= 0) {
+		this.ds_house.setColumn(newRow, "CHECK", "0") // 기본값 셋팅
+		this.ds_house.setColumn(newRow, "REGION", "- 선택 -")
+		this.ds_house.setColumn(newRow, "COUNTRY", "- 선택 -")
+		this.ds_house.setColumn(newRow, "LOCATION", "- 선택 -")
+	}
+}
+
+
+/***************************************************
+* 함수명 : div_top_save_btn_onclick
+* 내  용 : 그리드 내 추가 및 수정된 사항 저장 함수
+****************************************************/
+this.div_top_save_btn_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{	
+	var row = this.ds_house.getRowCount();
+	
+	var isValid = this.fn_checkVal();
+	if(isValid) {
+		var result = application.confirm("정말로 저장하시겠습니까?","TEST","warning");
+		if (result) {
+		
+			for(i=0; i<row; i++) {
+				var rowType = this.ds_house.getRowType();
+				trace(rowType);
+				if(rowType=2) {
+					this.ds_house.setColumn(i, "ROWTYPE", 2);
+				} else if(rowType=4) {
+					this.ds_house.setColumn(i, "ROWTYPE", 4);
+				}
+			}
+			
+			this.fn_save();
+			
+		} else {
+			trace("저장 작업 취소");
+		}
+	}
+}
+
+/***************************************************
+* 함수명 : fn_save
+* 내  용 : 저장 트랜잭션
+****************************************************/
+this.fn_save = function(){
+
+	var strSvcId = "upsertInfo";
+	var strSvcUrl = "http://localhost:8080/upsertInfo";
+	var inData = "inDataset=ds_house"
+	var outData = "";
+	var strAvg = "";
+	var callBackFnc = "fn_Callback_Save";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+
+/***************************************************
+* 함수명 : fn_Callback_Save
+* 내  용 : 콜백
+****************************************************/
+this.fn_Callback_Save = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		alert("저장이 완료되었습니다.");
+		this.div_top_search_btn_onclick();
+	}
+}
+
+
+/***************************************************
+* 함수명 : fn_checkVal
+* 내  용 : 저장 시 유효성 검사 함수
+****************************************************/
+this.fn_checkVal = function() {
+	var rowCount = this.ds_house.getRowCount();
+	var hasCheckedItems = false; // 선택된 항목이 있는지 없는지
+	var missingFields = []; // 입력이 안된 값 배열에 추가
+	var rowPosition = 0;
+    for (var i = 0; i < rowCount; i++) {
+        var checkValue = this.ds_house.getColumn(i, "CHECK");
+        
+        // "CHECK" 값이 1인 경우에만 유효성 검사
+      
+			hasCheckedItems = true;
+						
+            var regionInfo = this.ds_house.getColumn(i, "REGION");
+            var countryInfo = this.ds_house.getColumn(i, "COUNTRY");
+            var locationInfo = this.ds_house.getColumn(i, "LOCATION");
+            var warehouseInfo = this.ds_house.getColumn(i, "WAREHOUSE_NAME");
+            
+            // 필수 필드 값 확인
+            if (!regionInfo || regionInfo == "- 선택 -") {
+				rowPosition = i;
+                missingFields.push("지역");
+            }
+            if (!countryInfo || countryInfo == "- 선택 -") {
+				rowPosition = i;
+                missingFields.push("국가");
+            }
+            if (!locationInfo || locationInfo == "- 선택 -") {
+				rowPosition = i;
+                missingFields.push("위치");
+            }
+            if (!warehouseInfo) {
+				rowPosition = i;
+                missingFields.push("창고명");
+            }
+            if (rowPosition > 0) {
+				break;
+            }
+    }
+    
+    // 체크된 항목이 없는 경우
+//     if (!hasCheckedItems) {
+//         alert("선택된 항목이 존재하지 않습니다.");
+//         return false;
+//     }
+    
+    // 필수 필드 누락이 있는 경우
+    if (missingFields.length > 0) {
+        var message = "다음 정보가 입력되지 않았습니다 : " + missingFields.join(", ");
+        this.ds_house.set_rowposition(rowPosition);
+        alert(message);
+        return false;
+    }
+    
+	return true;
+}
+
+
+/***************************************************
+* 함수명 : grd_houselist_onheadclick
+* 내  용 : 헤드영역 체크박스 클릭시 전체 체크 및 해제
+****************************************************/
+this.grd_houselist_onheadclick = function(obj:Grid, e:nexacro.GridClickEventInfo)
+{
+	var test = obj.getCellProperty("head", e.col, "text");
+	trace(test);
+	if(e.col == 0) {
+		if(obj.getCellProperty("head", e.col, "text") == 0) {
+			obj.setCellProperty("head", e.col, "text", 1);
+		} else {
+			obj.setCellProperty("head", e.col, "text", "");
+		}
+		var checkStatus = obj.getCellProperty("head", e.col, "text");
+	}
+	
+	var rowCount = this.ds_house.getRowCount();
+	for (var i = 0; i < rowCount ; i++) {
+		this.ds_house.setColumn(i, "CHECK", checkStatus);
+	}
+}
+
+
+/***************************************************
+* 함수명 : ds_house_oncolumnchanged 
+* 내  용 : 데이터셋 변경시 체크값 설정
+****************************************************/
+this.ds_house_oncolumnchanged = function(obj:Dataset, e:nexacro.DSColChangeEventInfo)
+{	
+	var row = e.row
+	if( e.row >= 0) {
+		var regionName = this.ds_house.getColumn(e.row, "REGION");
+		var countryName = this.ds_house.getColumn(e.row, "COUNTRY");
+		
+		var regionId = this.findRegionIdByValue(regionName);
+		var countryId = this.findCountryIdByValue(countryName);
+		trace(e.col);
+		if(e.col == 2){
+			// 필터 데이터 셋 2개 로 나누기 region영역 country, location 필터
+			this.filterCountryDatasetGrid(regionId, row);
+		}else if(e.col == 3){
+			// country 영역 -- location필터
+			this.filterLocationDatasetGrid(countryId, row);
+		}
+		
+		//this.filterDataset(regionId, countryId, row);
+	}
+
+	if (e.row >= 0) {  
+        var columnId = e.col;  
+        var newValue = e.newvalue;
+        var oldValue = this.ds_house.getOrgColumn(e.row, columnId);
+		// 로딩중엔 oncolumnchanged함수 수행 x
+        if (this.isLoading) {
+            return;
+        }
+//         // CHECK 컬럼에 대해서는 수행하지 않음
+//         if(columnId != 5) {
+// 			if (oldValue != newValue) {
+// 				 obj.setColumn(e.row, "CHECK", 1);
+// 			}
+// 		}
+    }
+}
+
+/***************************************************
+* 함수명 : findRegionIdByValue
+* 내  용 : VALUE값에 맞는 지역 ID 찾기
+// ****************************************************/
+this.findRegionIdByValue = function(regionValue) {
+    var regionId = null;
+	
+    // 데이터셋에서 각 행을 순회하며 regionValue와 일치하는 regionId 찾기
+    for (var i = 0; i < this.ds_region_grd.getRowCount(); i++) {
+        var value = this.ds_region_grd.getColumn(i, "REGION_NAME"); // 지역 이름
+        if (value === regionValue) {
+            regionId = this.ds_region_grd.getColumn(i, "REGION_ID");  
+            break;
+        }
+    }
+    return regionId;
+};
+
+/***************************************************
+* 함수명 : findRegionIdByValue
+* 내  용 : VALUE값에 맞는 국가 ID 찾기
+****************************************************/
+this.findCountryIdByValue = function(countryValue) {
+    var countryId = null;
+	
+    // 데이터셋에서 각 행을 순회하며 regionValue와 일치하는 country 찾기
+    for (var i = 0; i < this.ds_country_grd.getRowCount(); i++) {
+        var value = this.ds_country_grd.getColumn(i, "COUNTRY_NAME"); // 국가 이름
+        if (value === countryValue) {
+            countryId = this.ds_country_grd.getColumn(i, "COUNTRY_ID");  
+            break;
+        }
+    }
+    return countryId;
+};
+
+/***************************************************
+* 함수명 : filterLocationDatasetGrid
+* 내  용 : 지역 데이터셋 - 국가 데이터셋 연관관계 설정 (그리드용)
+****************************************************/
+this.filterCountryDatasetGrid = function(regionId, row){
+	this.ds_country.set_enableevent(false);
+	this.ds_location.set_enableevent(false);
+	
+	var filterExprCountry = "REGION_ID == '" + regionId + "' || REGION_ID == " + 0;
+	if (regionId == 0) {
+		this.ds_house.setColumn(row, "COUNTRY", "- 선택 -");
+		this.ds_house.setColumn(row, "LOCATION", "- 선택 -");
+		this.ds_country_grd.filter("");
+		this.ds_location_grd.filter("");
+	} else {
+		this.ds_country_grd.filter(filterExprCountry);
+		
+		var countryIds = [];
+		
+		// 필터링된 국가 데이터셋에서 regionId에 맞는 countryId 뽑아서 배열에 저장
+        for (var i = 0; i < this.ds_country_grd.getRowCount(); i++) {
+            var countryId = this.ds_country_grd.getColumn(i, "COUNTRY_ID"); 
+            var countryRegionId = this.ds_country_grd.getColumn(i, "REGION_ID");
+            
+            if (countryRegionId == regionId) {
+				countryIds.push(countryId);
+            }
+        }
+        
+        // countryId에 맞는 location 필터링
+        if(countryIds.length>0) {
+			var filterExprLocation = "";
+			for (var i = 0; i < countryIds.length; i++) {
+				if (i > 0) {
+					filterExprLocation += " || ";
+				}
+				filterExprLocation += "COUNTRY_ID == '" + countryIds[i] + "' || COUNTRY_ID == ''";
+			}
+			this.ds_location_grd.filter(filterExprLocation);
+        } else {
+			this.ds_location_grd.filter("");
+        }
+	}
+
+	this.ds_country_grd.set_enableevent(true);
+	this.ds_location_grd.set_enableevent(true);
+}
+
+/***************************************************
+* 함수명 : filterLocationDatasetGrid
+* 내  용 : 국가 데이터셋 - 위치 데이터셋 연관관계 설정 (그리드용)
+****************************************************/
+this.filterLocationDatasetGrid = function(countryId){
+	this.ds_location_grd.set_enableevent(false);
+	
+	trace(countryId);
+	var filterExprLocation = "COUNTRY_ID == '" + countryId + "' || COUNTRY_ID == " + 0;
+	if (countryId == 0) {
+		this.ds_house.setColumn(row, "LOCATION", "- 선택 -");
+		this.ds_location_grd.filter("");
+	} else {
+		this.ds_location_grd.filter(filterExprLocation);
+	}
+	
+	this.ds_location_grd.set_enableevent(true);
+}
+
+
+/***************************************************
+* 함수명 : div_cond_cbo_region_onitemchanged, filterCountryDataset
+* 내  용 : 지역 데이터셋 - 국가 데이터셋 연관관계 설정 
+****************************************************/
+this.div_cond_cbo_region_onitemchanged = function(obj:Combo, e:nexacro.ItemChangeEventInfo)
+{	
+	var selectedRegionId = obj.value;
+	this.div_cond.cbo_country.set_index(0);
+	this.div_cond.cbo_location.set_index(0);
+	this.filterCountryDataset(selectedRegionId);
+		
+}
+this.filterCountryDataset = function (regionId) {
+	this.ds_country.set_enableevent(false);
+	this.ds_location.set_enableevent(false);
+	
+	var filterExprCountry = "REGION_ID == '" + regionId + "' || REGION_ID == 0";
+	
+	if (regionId == 0) {
+		this.ds_country.filter("");
+		this.ds_location.filter("");
+	} else {
+		this.ds_country.filter(filterExprCountry);
+		
+		var countryIds = [];
+		
+		// 필터링된 국가 데이터셋에서 regionId에 맞는 countryId 뽑아서 배열에 저장
+        for (var i = 0; i < this.ds_country.getRowCount(); i++) {
+            var countryId = this.ds_country.getColumn(i, "COUNTRY_ID"); 
+            var countryRegionId = this.ds_country.getColumn(i, "REGION_ID");
+            
+            if (countryRegionId == regionId) {
+				countryIds.push(countryId);
+            }
+        }
+        
+        // countryId에 맞는 location 필터링
+        if(countryIds.length>0) {
+			var filterExprLocation = "";
+			for (var i = 0; i < countryIds.length; i++) {
+				if (i > 0) {
+					filterExprLocation += " || ";
+				}
+				filterExprLocation += "COUNTRY_ID == '" + countryIds[i] + "' || COUNTRY_ID == 0";
+			}
+			this.ds_location.filter(filterExprLocation);
+        } else {
+			this.ds_location.filter("");
+        }
+	}
+
+	this.ds_country.set_enableevent(true);
+	this.ds_location.set_enableevent(true);
+}
+
+/***************************************************
+* 함수명 : div_cond_cbo_region_onitemchanged, filterLocationDataset
+* 내  용 : 국가 데이터셋 - 위치 데이터셋 연관관계 설정
+****************************************************/
+this.div_cond_cbo_country_onitemchanged = function(obj:Combo, e:nexacro.ItemChangeEventInfo)
+{
+	var selectedCountryId = obj.value;
+	this.div_cond.cbo_location.set_index(0);
+	this.filterLocationDataset(selectedCountryId);
+    
+}
+this.filterLocationDataset = function (countryId) {
+	this.ds_location.set_enableevent(false);
+	var filterExprLocation = "COUNTRY_ID == '" + countryId + "' || COUNTRY_ID == 0";
+	if (countryId == 0) {
+		this.ds_location.filter("");
+	} else {
+		this.ds_location.filter(filterExprLocation);
+	}
+	this.ds_location.set_enableevent(true);
+}
+
+
+/***************************************************
+* 함수명 : div_top_reset_btn_onclick
+* 내  용 : 조건 데이터셋 초기화 함수
+****************************************************/
+this.div_top_reset_btn_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.div_cond.cbo_region.set_index(0);
+	this.div_cond.cbo_country.set_index(0);
+	this.div_cond.cbo_location.set_index(0);
+}
+
+
+/***************************************************
+* 함수명 : div_top_delete_btn_onclick 
+* 내  용 : 삭제 버튼 클릭 및 안내 문구
+****************************************************/
+this.div_top_delete_btn_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	IsChecked = this.fn_existCheck();
+	if(!IsChecked){
+		alert("선택된 값이 없습니다.");
+	}
+	
+	if(IsChecked){
+		var result = application.confirm("정말로 삭제하시겠습니까?","warning","warning");
+		if (result) {
+			this.fn_deleteWarehouseInfo();
+		} else {
+			trace("삭제 작업 취소");
+		}
+	}	
+}
+
+/***************************************************
+* 함수명 : fn_existCheck 
+* 내  용 : 체크상태 유효성 검사
+****************************************************/
+this.fn_existCheck = function()
+{
+	row = this.ds_house.getRowCount();
+	var checked = false;
+	for (var i = 0; i < row; i++) {
+        var checkStatus = this.ds_house.getColumn(i, "CHECK"); 
+        if (checkStatus == 1) {
+			checked = true;
+            break;
+        }
+    }
+	return checked;
+}
+
+/***************************************************
+* 함수명 : fn_deleteWarehouseInfo 
+* 내  용 : 삭제 트랜잭션
+****************************************************/
+this.fn_deleteWarehouseInfo = function()
+{
+	var strSvcId = "delete";
+	var strSvcUrl = "http://localhost:8080/deleteWarehouse";
+	var inData = "inDataset=ds_house"
+	var outData = "";
+	var strAvg = "";
+	var callBackFnc = "fn_Callback_Delete";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+
+/***************************************************
+* 함수명 : fn_Callback_Delete
+* 내  용 : (콜백)
+****************************************************/
+this.fn_Callback_Delete = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		alert("삭제가 완료되었습니다.");
+		this.div_top_search_btn_onclick();
+	}
+}
+
+
+
+
+
+
+
+this.Button00_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	// 이동할 URL 설정
+    var url = "http://localhost:8080/TestProject/index.html";
+
+    // 또는, 현재 탭에서 열기
+    window.location.href = url; // 현재 탭에서 열기
+}
+]]></Script>
+  </Form>
+</FDL>

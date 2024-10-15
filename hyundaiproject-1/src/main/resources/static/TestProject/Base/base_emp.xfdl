@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="base_emp" left="0" top="0" width="1002" height="670" titletext="New Form" onload="base_emp_onload" style="border:0 none #808080ff ;">
+    <Layouts>
+      <Layout>
+        <Div id="div_cond" taborder="13" left="20" top="44" right="20" height="37" style="border:1 solid #808080ff ;">
+          <Layouts>
+            <Layout>
+              <Combo id="cbo_mgr" taborder="3" innerdataset="@ds_mgr" codecolumn="MANAGER_ID" datacolumn="FIRST_NAME" onitemchanged="Combo00_onitemchanged" onkeydown="common_onkeydown" left="646" top="8" width="142" height="20"/>
+              <Calendar id="cal_To" taborder="2" dateformat="yyyy-MM-dd" onkeydown="common_onkeydown" left="426" top="8" width="134" height="20" style="padding:0 5 0 0;"/>
+              <Static id="st_mgr" taborder="4" text="관리자" left="600" top="8" width="41" height="20" style="align:right middle;"/>
+              <Static id="st_bar" taborder="5" text="-" onclick="Static01_onclick" left="397" top="8" width="24" height="20" style="align:middle;font:bold 9 Dotum;"/>
+              <Calendar id="cal_From" taborder="1" dateformat="yyyy-MM-dd" left="263" top="8" width="129" height="20" style="padding:0 5 0 0;" onkeydown="common_onkeydown" oneditclick="div_cond_cal_From_oneditclick" onchanged="div_cond_cal_From_onchanged"/>
+              <Static id="st_hireDate" taborder="6" text="고용일" left="220" top="8" width="38" height="20" style="align:right middle;"/>
+              <Edit id="edt_name" taborder="0" onkeydown="common_onkeydown" oneditclick="edit_name_oneditclick" left="59" top="8" width="121" height="20" style="align:left middle;" maxlength="80"/>
+              <Static id="st_name" taborder="7" text="이름" left="20" top="8" width="34" height="20" style="align:right middle;font:10 Dotum;"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="st_title" taborder="4" text="▣ 직원 목록" left="20" top="14" height="28" style="background:transparent;align:left middle;font:bold 16 Dotum;" onclick="st_title_onclick" width="200"/>
+        <Grid id="grd_emplist" taborder="11" left="20" top="83" binddataset="ds_emp" oncelldblclick="grd_emplist_oncelldblclick" autofittype="col" right="20" bottom="20">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="81"/>
+                <Column size="234"/>
+                <Column size="207"/>
+                <Column size="289"/>
+                <Column size="135"/>
+                <Column size="145"/>
+                <Column size="0"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell style="background:#8eb5e3ff;" text="관리번호"/>
+                <Cell col="1" style="background:#8eb5e3ff;" text="직책"/>
+                <Cell col="2" style="background:#8eb5e3ff;" text="이름"/>
+                <Cell col="3" style="background:#8eb5e3ff;" text="EMAIL"/>
+                <Cell col="4" style="background:#8eb5e3ff;" text="고용일"/>
+                <Cell col="5" style="background:#8eb5e3ff;" text="관리자명"/>
+                <Cell col="6" text="PHONE" expandsize="0"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:EMPLOYEE_ID"/>
+                <Cell col="1" style="align:left;padding:0 0 0 2;" text="bind:JOB_TITLE"/>
+                <Cell col="2" style="align:left;padding:0 0 0 2;" text="bind:FULL_NAME"/>
+                <Cell col="3" style="align:left;padding:0 0 0 2;" text="bind:EMAIL"/>
+                <Cell col="4" text="bind:HIRE_DATE" calendardisplaynulltype="default"/>
+                <Cell col="5" style="align:left;" text="bind:MANAGER_ID"/>
+                <Cell col="6" text="bind:PHONE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="div_btn" taborder="14" text="Div01" top="16" height="28" width="504" right="20">
+          <Layouts>
+            <Layout>
+              <Button id="btn_reset" taborder="0" onclick="btn_reset_onclick" top="2" width="35" height="24" style="image:URL('theme://hiclipart.com (1).png');background:#4f81bdff;border:1 solid #999999ff ;cursor:hand;" right="124"/>
+              <Button id="btn_search" taborder="1" text="조회" onclick="btn_search_onclick" top="2" width="60" height="24" style="background:#4f81bdff;border:1 solid #999999ff ;color:#ffffffff;font:9 Dotum;cursor:hand;" right="62"/>
+              <Button id="btn_add" taborder="2" text="등록" onclick="btn_add_onclick" top="2" width="60" height="24" style="background:#4f81bdff;border:1 solid #999999ff ;color:#ffffffff;font:9 Dotum;cursor:hand;" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btn_menu" taborder="15" text="MENULIST" left="150" top="20" width="80" height="20" onclick="btn_menu_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_emp">
+        <ColumnInfo>
+          <Column id="EMPLOYEE_ID" type="INT" size="256"/>
+          <Column id="LAST_NAME" type="STRING" size="256"/>
+          <Column id="FIRST_NAME" type="STRING" size="256"/>
+          <Column id="EMAIL" type="STRING" size="256"/>
+          <Column id="PHONE" type="STRING" size="256"/>
+          <Column id="HIRE_DATE" type="STRING" size="256"/>
+          <Column id="MANAGER_ID" type="STRING" size="256"/>
+          <Column id="JOB_TITLE" type="STRING" size="256"/>
+          <Column id="EMAIL_DOMAIN" type="STRING" size="256"/>
+          <Column id="FULL_NAME" type="STRING" size="256"/>
+          <Column id="FULL_EMAIL" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_searchList">
+        <ColumnInfo>
+          <Column id="EMPLOYEE_ID" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_cond">
+        <ColumnInfo>
+          <Column id="sendName" type="STRING" size="256"/>
+          <Column id="sendDateFrom" type="STRING" size="256"/>
+          <Column id="sendDateTo" type="STRING" size="256"/>
+          <Column id="sendMgr" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_mgr" onload="ds_mgr_onload">
+        <ColumnInfo>
+          <Column id="MANAGER_ID" type="STRING" size="256"/>
+          <Column id="FIRST_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_job">
+        <ColumnInfo>
+          <Column id="JOB_TITLE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_selected">
+        <ColumnInfo>
+          <Column id="EMPLOYEE_ID" type="INT" size="256"/>
+          <Column id="LAST_NAME" type="STRING" size="256"/>
+          <Column id="FIRST_NAME" type="STRING" size="256"/>
+          <Column id="EMAIL" type="STRING" size="256"/>
+          <Column id="PHONE" type="STRING" size="256"/>
+          <Column id="HIRE_DATE" type="STRING" size="256"/>
+          <Column id="MANAGER_ID" type="STRING" size="256"/>
+          <Column id="JOB_TITLE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_email">
+        <ColumnInfo>
+          <Column id="EMAIL_DOMAIN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item3" compid="Div00.cbo_mgr" propid="value" datasetid="ds_cond" columnid="sendMgr"/>
+      <BindItem id="item2" compid="Div00.cal_To" propid="value" datasetid="ds_cond" columnid="sendDateTo"/>
+      <BindItem id="item1" compid="Div00.cal_From" propid="value" datasetid="ds_cond" columnid="sendDateFrom"/>
+      <BindItem id="item0" compid="Div00.edt_name" propid="value" datasetid="ds_cond" columnid="sendName"/>
+      <BindItem id="item4" compid="div_cond.edt_name" propid="value" datasetid="ds_cond" columnid="sendName"/>
+      <BindItem id="item5" compid="div_cond.cal_From" propid="value" datasetid="ds_cond" columnid="sendDateFrom"/>
+      <BindItem id="item6" compid="div_cond.cal_To" propid="value" datasetid="ds_cond" columnid="sendDateTo"/>
+      <BindItem id="item7" compid="div_cond.cbo_mgr" propid="value" datasetid="ds_cond" columnid="sendMgr"/>
+    </Bind>
+    <InitValue/>
+    <Script type="xscript5.0"><![CDATA[/*
+화면명 : 직원 목록 조회 화면
+작성자 : 김진한
+작성일자 : 2024/09/09
+*/
+
+/***************************************************
+* 함수명 : base_emp_onload 
+* 내  용 : 로드 시 데이터 가져오기(트랜잭션), fn_callback_loadMgrInfo(콜백)
+****************************************************/
+this.base_emp_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.fn_loadMgrJobData();
+}
+
+this.fn_loadMgrJobData = function(){
+	var strSvcId = "managerInfo";
+	var strSvcUrl = "http://localhost:8080/mgrInfo";
+	var inData = ""
+	var outData = "ds_mgr=outDataset, ds_job=outDataset2, ds_email=outDataset3";
+	var strAvg = "";
+	var callBackFnc = "fn_callback_loadMgrInfo";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+/***************************************************
+* 함수명 : fn_callback_loadMgrInfo 
+* 내  용 : 콤보박스 전체&선택 값 넣어주기(콜백)
+****************************************************/
+this.fn_callback_loadMgrInfo = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		var existingManagerId = this.ds_mgr.getColumn(0, "MANAGER_ID");
+		var existingJobTitle = this.ds_job.getColumn(0, "JOB_TITLE");
+		var existingemail = this.ds_email.getColumn(0, "EMAIL_DOMAIN");
+		
+		if (existingManagerId !== "") {
+            var newRow = this.ds_mgr.insertRow(0);
+            this.ds_mgr.setColumn(newRow, "MANAGER_ID", "");
+            this.ds_mgr.setColumn(newRow, "FIRST_NAME", "- 전체 -");
+        }
+        if (existingJobTitle !== "- 선택 -") {
+			var newRow = this.ds_job.insertRow(0);
+			this.ds_job.setColumn(newRow, "JOB_TITLE", "- 선택 -");
+        }
+        if (existingemail !== "- 선택 -") {
+			var newRow = this.ds_email.insertRow(0);
+			this.ds_email.setColumn(newRow, "EMAIL_DOMAIN", "- 선택 -");
+        }
+        this.div_cond.cbo_mgr.set_index(0);
+	}
+}
+
+/***************************************************
+* 함수명 : btn_search_onclick 
+* 내  용 : 조회 클릭 
+****************************************************/
+this.btn_search_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{	
+	this.fn_checkVal();
+}
+
+/***************************************************
+* 함수명 : fn_search_empInfo 
+* 내  용 : 조회(트랜잭션)
+****************************************************/
+this.fn_search_empInfo = function()
+{
+	var strSvcId = "baseId";
+	var strSvcUrl = "http://localhost:8080/base";
+	var inData = "inDataset=ds_cond"
+	var outData = "ds_emp=outDataset";
+	var strAvg = "";
+	var callBackFnc = "fn_callback_searchEmpInfo";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+
+/***************************************************
+* 함수명 : fn_callback_searchEmpInfo 
+* 내  용 : (콜백)
+****************************************************/
+this.fn_callback_searchEmpInfo = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		
+	}
+}
+
+/***************************************************
+* 함수명 : fn_checkVal 
+* 내  용 : 조회 유효성 검사
+****************************************************/
+this.fn_checkVal = function(){
+	var fromDate = this.ds_cond.getColumn(0, "sendDateFrom");
+	var toDate = this.ds_cond.getColumn(0, "sendDateTo");
+	
+	if(fromDate < 19000000) {
+		alert("1900년도 이후로 입력이 가능합니다.");
+		return;
+	}
+	
+	if(toDate < 19000000) {
+		alert("1900년도 이후로 입력이 가능합니다.");
+		return;
+	}
+	
+	if(toDate-fromDate < 0) {
+		alert("시작 날짜가 종료 날짜보다 같거나 더 늦습니다. 올바른 날짜 범위를 입력해 주세요.");
+		return;
+	}
+	
+	this.fn_search_empInfo();
+}
+
+
+/***************************************************
+* 함수명 : btn_reset_onclick 
+* 내  용 : 조회 조건 ds_cond초기화
+****************************************************/
+this.btn_reset_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{	
+	this.div_cond.edt_name.set_value("");
+	this.div_cond.cal_From.set_value("");
+	this.div_cond.cal_To.set_value("");
+	this.div_cond.cbo_mgr.set_value("");
+}
+
+
+/***************************************************
+* 함수명 : btn_add_onclick 
+* 내  용 : 등록하기 버튼(신규 등록), fn_callback_modalForm(콜백)
+****************************************************/
+this.btn_add_onclick = function(obj, e) {
+   var nLeft = system.clientToScreenX(this, 10);
+   var nTop  = system.clientToScreenY(this, 10);
+   var objChild = new ChildFrame("popModalForm", "absolute", nLeft, nTop, 300, 400);
+            
+	// 팝업할 폼 파일 설정
+	objChild.set_formurl("Base::modal_emp.xfdl");
+	objChild.set_openalign("center middle");
+	objChild.set_dragmovetype("all");  
+
+        
+	// 팝업창에 데이터셋 전달
+	var objArg = {
+		ds_mgr: this.ds_mgr.saveXML(),
+		ds_job: this.ds_job.saveXML()// 데이터셋을 XML 형태로 전달
+	};
+            
+	// 모달로 팝업 표시
+	objChild.showModal(this.getOwnerFrame()
+					 , {}
+					 , this
+					 , "fn_callback_modalForm");
+};
+
+/***************************************************
+* 함수명 : grd_emplist_oncelldblclick 
+* 내  용 : 셀 클릭 함수(기존 정보 수정)
+****************************************************/
+this.grd_emplist_oncelldblclick = function(obj:Grid, e:nexacro.GridClickEventInfo)
+{
+	var nRow = e.row;
+	if(nRow < 0) return;
+	
+	var selectedRow = e.row;
+	
+	this.ds_selected.addRow();
+	
+	var selectedId = obj.getCellValue(selectedRow, "0");
+	var selectedJob = obj.getCellValue(selectedRow, "1");
+	var selectedName = obj.getCellValue(selectedRow, "2");
+	var selectedEmail = obj.getCellValue(selectedRow, "3");
+	var selectedHireDate = obj.getCellValue(selectedRow, "4");
+	var selectedMgr = obj.getCellValue(selectedRow, "5");
+	var selectedPhone = obj.getCellValue(selectedRow, "6");
+    
+	this.ds_selected.setColumn(0, "EMPLOYEE_ID", selectedId);
+	this.ds_selected.setColumn(0, "JOB_TITLE", selectedJob);
+	this.ds_selected.setColumn(0, "FIRST_NAME", selectedName);
+	this.ds_selected.setColumn(0, "EMAIL", selectedEmail);
+	this.ds_selected.setColumn(0, "HIRE_DATE", selectedHireDate);
+	this.ds_selected.setColumn(0, "MANAGER_ID", selectedMgr);
+	this.ds_selected.setColumn(0, "PHONE", selectedPhone);
+
+    // 팝업 창 위치 설정;
+    var nLeft = system.clientToScreenX(this, 10);
+    var nTop = system.clientToScreenY(this, 10);
+
+    // ChildFrame 생성
+    var objChild = new ChildFrame("popModalForm", "absolute", nLeft, nTop, 300, 400);
+    
+    // 팝업할 폼 파일 설정
+    objChild.set_formurl("Base::modal_emp.xfdl");
+    objChild.set_openalign("center middle");
+    objChild.set_dragmovetype("all");  
+
+    // 팝업창에 데이터셋 전달
+    var objArg = {
+		row: nRow,
+        ds_mgr: this.ds_mgr.saveXML(),
+        ds_job: this.ds_job.saveXML(),
+        ds_selected: this.ds_selected.saveXML()
+    };
+
+    // 모달로 팝업 표시
+    objChild.showModal(this.getOwnerFrame(), {}, this, "fn_callback_modalForm2");
+}
+
+/***************************************************
+* 함수명 : fn_callback_modalForm2 
+* 내  용 : (콜백)
+****************************************************/
+this.fn_callback_modalForm2 = function(sPopupId, sReturn) {
+    if (sReturn === undefined) {
+        sReturn = "";
+    }
+    if (sPopupId === "popModalForm") {
+		this.ds_selected.clearData();
+        if (sReturn.length > 0) {
+            var arrRtn = sReturn.split("|");
+           
+            this.div_search.form.edt_dept_cd.set_value(arrRtn[0]);
+            this.div_search.form.edt_dept_nm.set_value(arrRtn[1]);
+        }
+    }
+};
+
+
+/***************************************************
+* 함수명 : common_onkeydown 
+* 내  용 : 엔터 키 입력 함수(조회)
+****************************************************/
+this.common_onkeydown = function(obj:Edit, e:nexacro.KeyEventInfo)
+{
+	 if (e.keycode == 13) {  //엔터키 keycode
+		obj.updateToDataset();
+        this.btn_search_onclick();  
+    }
+}
+
+/***************************************************
+* 함수명 : btn_menu_onclick 
+* 내  용 : 테스트용 메뉴 버튼
+****************************************************/
+this.btn_menu_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	// 이동할 URL 설정
+    var url = "http://localhost:8080/TestProject/index.html";
+
+    // 또는, 현재 탭에서 열기
+    window.location.href = url; // 현재 탭에서 열기
+}
+]]></Script>
+  </Form>
+</FDL>

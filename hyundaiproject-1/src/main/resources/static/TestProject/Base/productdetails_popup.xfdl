@@ -1,0 +1,606 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="productdetails_popup" left="0" top="0" width="915" height="248" titletext="New Form" onload="productdetails_popup_onload">
+    <Layouts>
+      <Layout>
+        <Static id="st_title" taborder="0" text="▣  재고 등록" left="20" top="23" width="200" height="35" style="font:bold 16 Dotum;"/>
+        <Div id="Div00" taborder="1" text="Div00" left="20" top="57" height="24" style="border:1 solid #808080ff ;" right="20">
+          <Layouts>
+            <Layout>
+              <Static id="st_category" taborder="0" text="카테고리" left="0" top="0" width="120" style="background:moccasin;border:1 solid lightgrey ;color:#46463dff;align:center;font:bold 11 Dotum;" bottom="0"/>
+              <Combo id="cbo_category" taborder="1" left="121" top="1" width="168" bottom="1" innerdataset="@ds_category" codecolumn="CATEGORY_ID" datacolumn="CATEGORY_NAME" onitemchanged="Div00_category_combo_onitemchanged" style="color:black;"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="Div01" taborder="2" text="Div01" left="20" top="80" height="24" right="20" style="border:1 solid #808080ff ;">
+          <Layouts>
+            <Layout>
+              <Static id="st_house" taborder="0" text="창고" left="0" top="0" width="120" style="background:moccasin;border:1 solid lightgrey ;color:#46463dff;align:center;font:bold 11 Dotum;" bottom="0"/>
+              <Combo id="cbo_house" taborder="1" left="121" top="1" width="168" bottom="1" innerdataset="@ds_house" codecolumn="WAREHOUSE_ID" datacolumn="WAREHOUSE_NAME" onitemchanged="Div01_house_combo_onitemchanged" style="color:black;"/>
+              <Edit id="edt_region" taborder="2" left="290" top="1" width="168" bottom="1" readonly="true" style="background:lightgrey;border:1 solid black ;color:#000000ff;font:bold 9 Dotum;"/>
+              <Edit id="edt_country" taborder="3" left="459" top="1" width="168" bottom="1" readonly="true" style="background:lightgrey;border:1 solid black ;color:#000000ff;font:bold 9 Dotum;"/>
+              <Edit id="edt_location" taborder="4" left="628" top="1" bottom="1" readonly="true" style="background:lightgrey;border:1 solid black ;color:#000000ff;font:bold 9 Dotum;" right="1"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="Div02" taborder="3" text="Div02" left="20" top="103" height="24" right="20" style="border:1 solid #808080ff ;">
+          <Layouts>
+            <Layout>
+              <Static id="st_productId" taborder="0" text="상품관리번호" left="0" top="0" width="120" style="background:moccasin;border:1 solid lightgrey ;color:#46463dff;align:center;font:bold 11 Dotum;" bottom="0"/>
+              <Edit id="edt_porductId" taborder="1" left="121" top="1" width="168" bottom="1" style="background:lightgrey;border:1 solid black ;color:#000000ff;align:right middle;font:bold 9 Dotum;" readonly="true"/>
+              <Static id="st_productName" taborder="2" text="상품명" left="290" top="1" width="120" style="background:moccasin;border:1 solid lightgrey ;align:middle;font:bold 11 Dotum;" bottom="1"/>
+              <Edit id="edt_productName" taborder="3" left="411" top="1" bottom="1" onchanged="Div02_productName_edit_onchanged" maxlength="80" right="1" style="color:black;"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="Div03" taborder="4" text="Div03" left="20" top="126" height="24" right="20" style="border:1 solid #808080ff ;">
+          <Layouts>
+            <Layout>
+              <Static id="st_amount" taborder="0" text="수량" left="0" top="0" width="120" style="background:moccasin;border:1 solid lightgrey ;color:#46463dff;align:center;font:bold 11 Dotum;" bottom="0"/>
+              <Edit id="edt_amount" taborder="1" left="121" top="1" width="168" bottom="1" onchanged="Div03_amount_edit_onchanged" style="align:right middle;" ontextchanged="Div03_edt_amount_ontextchanged" maxlength="9" oneditclick="Div03_edt_amount_oneditclick"/>
+              <Static id="st_price" taborder="2" text="가격" left="290" top="1" width="120" style="background:moccasin;border:1 solid lightgrey ;align:middle;font:bold 11 Dotum;" bottom="1"/>
+              <MaskEdit id="MaskEdit00" taborder="3" mask="!#,###,###.99" limitbymask="both" left="411" top="1" bottom="1" right="1" style="color:black;"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="Div04" taborder="5" text="Div04" left="20" top="149" height="82" right="20" style="border:1 solid #808080ff ;">
+          <Layouts>
+            <Layout>
+              <Static id="st_description" taborder="0" text="비고" left="0" top="0" width="120" style="background:moccasin;border:1 solid lightgrey ;color:#46463dff;align:center;font:bold 11 Dotum;" bottom="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btn_update" taborder="6" text="수정" top="30" width="60" height="24" onclick="btn_update_onclick" style="background:#4f81bdff;color:#ffffffff;font:9 Dotum;cursor:hand;" right="144"/>
+        <Button id="btn_delete" taborder="7" text="삭제" top="30" width="60" height="24" style="background:#4f81bdff;color:#ffffffff;font:11 Dotum;cursor:hand;" right="82" onclick="btn_delete_onclick"/>
+        <Button id="btn_list" taborder="8" text="목록" top="30" height="24" style="background:#4f81bdff;color:#ffffffff;font:9 Dotum;cursor:hand;" right="20" width="60" onclick="btn_list_onclick"/>
+        <Button id="btn_save" taborder="9" text="저장" top="30" width="60" height="24" style="background:#4f81bdff;color:#ffffffff;font:9 Dotum;cursor:hand;" right="82" onclick="btn_save_onclick"/>
+        <TextArea id="textarea_description" taborder="10" left="142" top="151" height="78" wordwrap="char" ontextchanged="textarea_description_ontextchanged" maxlength="666" style="padding:3 0 0 3;color:black;" width="751"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_inv">
+        <ColumnInfo>
+          <Column id="CATEGORY_ID" type="STRING" size="256"/>
+          <Column id="WAREHOUSE_ID" type="STRING" size="256"/>
+          <Column id="REGION_NAME" type="STRING" size="256"/>
+          <Column id="COUNTRY_NAME" type="STRING" size="256"/>
+          <Column id="LOCATION_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_ID" type="STRING" size="256"/>
+          <Column id="PRODUCT_NAME" type="STRING" size="256"/>
+          <Column id="AMOUNT" type="STRING" size="256"/>
+          <Column id="PRICE" type="STRING" size="256"/>
+          <Column id="DESCRIPTION" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_location"/>
+      <Dataset id="ds_category">
+        <ColumnInfo>
+          <Column id="CATEGORY_ID" type="STRING" size="256"/>
+          <Column id="CATEGORY_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_load">
+        <ColumnInfo>
+          <Column id="WAREHOUSE_ID" type="STRING" size="256"/>
+          <Column id="REGION_NAME" type="STRING" size="256"/>
+          <Column id="COUNTRY_NAME" type="STRING" size="256"/>
+          <Column id="LOCATION_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_house">
+        <ColumnInfo>
+          <Column id="WAREHOUSE_ID" type="STRING" size="256"/>
+          <Column id="WAREHOUSE_NAME" type="STRING" size="256"/>
+          <Column id="LOCATION_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_rec_inv">
+        <ColumnInfo>
+          <Column id="CATEGORY_ID" type="STRING" size="256"/>
+          <Column id="CATEGORY" type="STRING" size="256"/>
+          <Column id="PRODUCT_NAME" type="STRING" size="256"/>
+          <Column id="REGION" type="STRING" size="256"/>
+          <Column id="COUNTRY" type="STRING" size="256"/>
+          <Column id="LOCATION" type="STRING" size="256"/>
+          <Column id="WAREHOUSE_NAME" type="STRING" size="256"/>
+          <Column id="WAREHOUSE_ID" type="STRING" size="256"/>
+          <Column id="PRODUCT_ID" type="STRING" size="256"/>
+          <Column id="AMOUNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_p_inv">
+        <ColumnInfo>
+          <Column id="PRODUCT_ID" type="STRING" size="256"/>
+          <Column id="PRODUCT_NAME" type="STRING" size="256"/>
+          <Column id="PRICE" type="STRING" size="256"/>
+          <Column id="DESCRIPTION" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_dummy">
+        <ColumnInfo>
+          <Column id="CATEGORY_ID" type="STRING" size="256"/>
+          <Column id="WAREHOUSE_ID" type="STRING" size="256"/>
+          <Column id="REGION_NAME" type="STRING" size="256"/>
+          <Column id="COUNTRY_NAME" type="STRING" size="256"/>
+          <Column id="LOCATION_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_ID" type="STRING" size="256"/>
+          <Column id="PRODUCT_NAME" type="STRING" size="256"/>
+          <Column id="AMOUNT" type="STRING" size="256"/>
+          <Column id="PRICE" type="STRING" size="256"/>
+          <Column id="DESCRIPTION" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="Div01.edt_region" propid="value" datasetid="ds_inv" columnid="REGION_NAME"/>
+      <BindItem id="item1" compid="Div01.edt_country" propid="value" datasetid="ds_inv" columnid="COUNTRY_NAME"/>
+      <BindItem id="item2" compid="Div01.edt_location" propid="value" datasetid="ds_inv" columnid="LOCATION_NAME"/>
+      <BindItem id="item3" compid="Div02.edt_porductId" propid="value" datasetid="ds_inv" columnid="PRODUCT_ID"/>
+      <BindItem id="item4" compid="Div00.cbo_category" propid="value" datasetid="ds_inv" columnid="CATEGORY_ID"/>
+      <BindItem id="item5" compid="Div01.cbo_house" propid="value" datasetid="ds_inv" columnid="WAREHOUSE_ID"/>
+      <BindItem id="item8" compid="Div03.edt_amount" propid="value" datasetid="ds_inv" columnid="AMOUNT"/>
+      <BindItem id="item9" compid="Div02.edt_productName" propid="value" datasetid="ds_inv" columnid="PRODUCT_NAME"/>
+      <BindItem id="item10" compid="textarea_description" propid="value" datasetid="ds_inv" columnid="DESCRIPTION"/>
+      <BindItem id="item6" compid="Div03.MaskEdit00" propid="value" datasetid="ds_inv" columnid="PRICE"/>
+    </Bind>
+    <Script type="xscript5.0"><![CDATA[/*
+화면명 : 재고 등록 팝업 
+작성자 : 김진한
+작성일자 : 2024/09/11
+*/
+
+
+flag = null;
+/***************************************************
+* 함수명 : productdetails_popup_onload 
+* 내  용 : 로드시 부모폼에서 데이터셋 가져오기
+****************************************************/
+this.productdetails_popup_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{	
+	this.ds_category.copyData(this.opener.ds_category); // copy parents dataset
+	this.ds_house.copyData(this.opener.ds_house);
+	flag = this.opener.ds_flag.getColumn(0, "Status");
+	trace(flag);
+	//if (!this.opener.ds_inv || this.opener.ds_inv.rowcount === 0) { // get inventory data
+	if (flag == 1) {
+		
+		trace("신규등록")
+		this.btn_update.set_visible(false);
+		this.btn_delete.set_visible(false);
+			var existingCategory = this.ds_category.getColumn(0, "CATEGORY_NAME");
+			
+			if (existingCategory == "- 전체 -") {
+				this.ds_category.setColumn(0, "CATEGORY_NAME", "- 선택 -");
+			}
+			this.Div00.cbo_category.set_index(0);
+			this.Div01.cbo_house.set_index(0);
+		return;
+	} else if (flag == 0) {
+		trace("수정팝업")
+		this.ds_rec_inv.copyData(this.opener.ds_send_inv);
+		this.btn_save.set_visible(false);
+		
+		this.Div00.cbo_category.set_enable(false);
+		this.Div01.cbo_house.set_enable(false);
+		this.Div02.edt_productName.set_enable(false);
+		this.Div03.MaskEdit00.set_enable(false);
+		this.textarea_description.set_enable(false);
+	}
+	var categoryId = this.ds_rec_inv.getColumn(0, "CATEGORY_ID")
+	var houseId = this.ds_rec_inv.getColumn(0, "WAREHOUSE_ID")
+	var amount = this.ds_rec_inv.getColumn(0, "AMOUNT")
+	
+ 	this.ds_inv.setColumn(0, "CATEGORY_ID", categoryId);
+ 	this.ds_inv.setColumn(0, "WAREHOUSE_ID", houseId);
+	this.ds_inv.setColumn(0, "AMOUNT", amount);
+	//복사본 데이터 추가
+	this.ds_dummy.setColumn(0, "CATEGORY_ID", categoryId);
+ 	this.ds_dummy.setColumn(0, "WAREHOUSE_ID", houseId);
+	this.ds_dummy.setColumn(0, "AMOUNT", amount);
+	
+	this.fn_loadHouseData();
+	this.fn_loadMatchData();
+}
+
+/***************************************************
+* 함수명 : fn_loadMatchData 
+* 내  용 : 데이터 로드 트랜잭션
+****************************************************/
+this.fn_loadMatchData = function() {
+	var strSvcId = "loadMatchData";
+	var strSvcUrl = "http://localhost:8080/loadMatchData";
+	var inData = "inDataset=ds_rec_inv"
+	var outData = "ds_p_inv=outDataset";
+	var strAvg = "";
+	var callBackFnc = "fn_Callback_loadMatchData";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+
+/***************************************************
+* 함수명 : fn_Callback_loadMatchData 
+* 내  용 : (콜백) 복사본데이터 만들기, 콤보박스 선택값 셋팅
+****************************************************/
+this.fn_Callback_loadMatchData = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		var productId = this.ds_p_inv.getColumn(0, "PRODUCT_ID")
+		var productName = this.ds_p_inv.getColumn(0, "PRODUCT_NAME")
+		var price = this.ds_p_inv.getColumn(0, "PRICE")
+		var description = this.ds_p_inv.getColumn(0, "DESCRIPTION")
+		
+		this.ds_inv.setColumn(0, "PRODUCT_ID", productId);
+		this.ds_inv.setColumn(0, "PRODUCT_NAME", productName);
+		this.ds_inv.setColumn(0, "PRICE", price);
+		this.ds_inv.setColumn(0, "DESCRIPTION", description);
+		//복사본 데이터 추가
+		this.ds_dummy.setColumn(0, "PRODUCT_ID", productId);
+		this.ds_dummy.setColumn(0, "PRODUCT_NAME", productName);
+		this.ds_dummy.setColumn(0, "PRICE", price);
+		this.ds_dummy.setColumn(0, "DESCRIPTION", description);
+		
+		var existingCategory = this.ds_category.getColumn(0, "CATEGORY_NAME");
+			
+			if (existingCategory == "- 전체 -") {
+				this.ds_category.setColumn(0, "CATEGORY_NAME", "- 선택 -");
+			}
+	}
+}
+
+
+/***************************************************
+* 함수명 : Div01_house_combo_onitemchanged 
+* 내  용 :  창고 선택시 해당하는 위치, 지역, 국가 정보 셋팅
+****************************************************/
+this.Div01_house_combo_onitemchanged = function(obj:Combo, e:nexacro.ItemChangeEventInfo)
+{
+	var houseId = obj.value;
+	this.ds_inv.setColumn(0, "WAREHOUSE_ID", houseId);
+	this.fn_loadHouseData();
+}
+
+/***************************************************
+* 함수명 : fn_loadHouseData 
+* 내  용 : 로드 트랜잭션 호출
+****************************************************/
+this.fn_loadHouseData = function() {
+	var strSvcId = "loadHouseData";
+	var strSvcUrl = "http://localhost:8080/loadHouseData";
+	var inData = "inDataset=ds_inv"
+	var outData = "ds_load=outDataset";
+	var strAvg = "";
+	var callBackFnc = "fnCallback_LoadHouseData";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+
+/***************************************************
+* 함수명 : fnCallback_LoadHouseData 
+* 내  용 : (콜백) 복사본 데이터 셋팅
+****************************************************/
+this.fnCallback_LoadHouseData = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		var regionData = this.ds_load.getColumn(0, "REGION_NAME")
+		var countryData = this.ds_load.getColumn(0, "COUNTRY_NAME")
+		var locationData = this.ds_load.getColumn(0, "LOCATION_NAME")
+		
+			this.ds_inv.setColumn(0, "REGION_NAME", regionData);
+			this.ds_inv.setColumn(0, "COUNTRY_NAME", countryData);
+			this.ds_inv.setColumn(0, "LOCATION_NAME", locationData);
+			// 복사본 데이터 추가
+			this.ds_dummy.setColumn(0, "REGION_NAME", regionData);
+			this.ds_dummy.setColumn(0, "COUNTRY_NAME", countryData);
+			this.ds_dummy.setColumn(0, "LOCATION_NAME", locationData);
+	}
+}
+
+
+/***************************************************
+* 함수명 : onitemchanged 
+* 내  용 :  필드값 입력 및 선택 시 ds_inv에 담기
+****************************************************/
+this.Div00_category_combo_onitemchanged = function(obj:Combo, e:nexacro.ItemChangeEventInfo)
+{
+	var newCategoryId = obj.value;
+	this.ds_inv.setColumn(0, "CATEGORY_ID", newCategoryId);
+}
+this.Div02_productName_edit_onchanged = function(obj:Edit, e:nexacro.ChangeEventInfo)
+{
+	var newPName = obj.value;
+	this.ds_inv.setColumn(0, "PRODUCT_NAME", newPName);
+}
+this.Div03_edt_amount_ontextchanged = function(obj:Edit, e:nexacro.TextChangedEventInfo)
+{
+	var rawValue = obj.value.replace(/,/g, '');
+    rawValue = rawValue.replace(/\D/g, '');
+    
+    // 빈 문자열이면 그대로 반환
+    if (rawValue === '') {
+        obj.set_value('');
+        return;
+    }
+    
+    // 천 단위 구분 기호를 추가
+    var formattedValue = '';
+    var length = rawValue.length;
+    var counter = 0;
+
+    for (var i = length - 1; i >= 0; i--) {
+        // 현재 문자를 앞에 추가
+        formattedValue = rawValue.charAt(i) + formattedValue;
+        counter++;
+
+        // 천 단위 구분 기호를 추가
+        if (counter % 3 === 0 && i !== 0) {
+            formattedValue = ',' + formattedValue;
+        }
+    }
+
+    // 포맷팅된 값을 입력 필드에 설정
+    obj.set_value(formattedValue);
+}
+// this.Div03_edt_price_ontextchanged = function(obj:Edit, e:nexacro.TextChangedEventInfo)
+// {
+//     var rawValue = obj.value.replace(/,/g, ''); // 기존의 천 단위 구분 기호 제거, 이게 있어야 ,999 같은 오류가 안생김
+//     rawValue = rawValue.replace(/\D/g, '');
+//     
+//     // 빈 문자열이면 그대로 반환
+//     if (rawValue === '') {
+//         obj.set_value('');
+//         return;
+//     }
+//     
+//     // 천 단위 구분 기호를 추가
+//     var formattedValue = '';
+//     var length = rawValue.length;
+//     var counter = 0;
+// 
+//     for (var i = length - 1; i >= 0; i--) {
+//         // 현재 문자를 앞에 추가
+//         formattedValue = rawValue.charAt(i) + formattedValue;
+//         counter++;
+// 
+//         // 천 단위 구분 기호를 추가
+//         if (counter % 3 === 0 && i !== 0) {
+//             formattedValue = ',' + formattedValue;
+//         }
+//     }
+// 
+//     // 포맷팅된 값을 입력 필드에 설정
+//     obj.set_value(formattedValue);
+// }
+this.textarea_description_ontextchanged = function(obj:TextArea, e:nexacro.TextChangedEventInfo)
+{
+	var newDescript = obj.value;
+	this.ds_inv.setColumn(0, "DESCRIPTION", newDescript);
+}
+
+
+/***************************************************
+* 함수명 : btn_update_onclick 
+* 내  용 : 수정 버튼 클릭
+****************************************************/
+this.btn_update_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	var validationMessage = this.fn_checkVal(); 
+    if (validationMessage) {
+        alert(validationMessage); 
+        return; 
+    }
+    
+    // 변경된 사항이 있는지 확인
+    if (!this.hasChanges()) {
+        alert("수정된 사항이 없습니다.");
+        return;
+    }
+    
+    var result = application.confirm("정말로 수정하시겠습니까?","TEST","warning");
+	if (result) {
+		this.fn_save(); 
+	} else {
+		trace("수정 작업 취소");
+	}
+}
+
+/***************************************************
+* 함수명 : hasChanges 
+* 내  용 : 현재 데이터셋과 원본 데이터셋 비교 (유효성검사)
+****************************************************/
+this.hasChanges = function() {
+	
+	var rowType = this.ds_inv.getRowType();
+	var rowType2 = this.ds_dummy.getRowType();
+	
+	 // 현재 데이터셋의 첫 번째 행 데이터 가져오기
+    var currentCategoryId = this.ds_inv.getColumn(0, "CATEGORY_ID");
+    var currentWarehouseId = this.ds_inv.getColumn(0, "WAREHOUSE_ID");
+    var currentRegionName = this.ds_inv.getColumn(0, "REGION_NAME");
+    var currentCountryName = this.ds_inv.getColumn(0, "COUNTRY_NAME");
+    var currentLocationName = this.ds_inv.getColumn(0, "LOCATION_NAME");
+    var currentProductId = this.ds_inv.getColumn(0, "PRODUCT_ID");
+    var currentProductName = this.ds_inv.getColumn(0, "PRODUCT_NAME");
+    var currentAmount = this.ds_inv.getColumn(0, "AMOUNT");
+    var currentPrice = this.ds_inv.getColumn(0, "PRICE");
+    var currentDescription = this.ds_inv.getColumn(0, "DESCRIPTION");
+
+    // 원본 데이터셋의 첫 번째 행 데이터 가져오기
+    var dummyCategoryId = this.ds_dummy.getColumn(0, "CATEGORY_ID");
+    var dummyWarehouseId = this.ds_dummy.getColumn(0, "WAREHOUSE_ID");
+    var dummyRegionName = this.ds_dummy.getColumn(0, "REGION_NAME");
+    var dummyCountryName = this.ds_dummy.getColumn(0, "COUNTRY_NAME");
+    var dummyLocationName = this.ds_dummy.getColumn(0, "LOCATION_NAME");
+    var dummyProductId = this.ds_dummy.getColumn(0, "PRODUCT_ID");
+    var dummyProductName = this.ds_dummy.getColumn(0, "PRODUCT_NAME");
+    var dummyAmount = this.ds_dummy.getColumn(0, "AMOUNT");
+    var dummyPrice = this.ds_dummy.getColumn(0, "PRICE");
+    var dummyDescription = this.ds_dummy.getColumn(0, "DESCRIPTION");
+
+    // 데이터 비교
+    return currentCategoryId !== dummyCategoryId ||
+           currentWarehouseId !== dummyWarehouseId ||
+           currentRegionName !== dummyRegionName ||
+           currentCountryName !== dummyCountryName ||
+           currentLocationName !== dummyLocationName ||
+           currentProductId !== dummyProductId ||
+           currentProductName !== dummyProductName ||
+           currentAmount !== dummyAmount ||
+           currentPrice !== dummyPrice ||
+           currentDescription !== dummyDescription;
+}
+
+
+/***************************************************
+* 함수명 : btn_save_onclick 
+* 내  용 : 저장 버튼 클릭
+****************************************************/
+this.btn_save_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	var validationMessage = this.fn_checkVal(); 
+    if (validationMessage) {
+        alert(validationMessage); 
+        return; 
+    }
+    
+    var result = application.confirm("정말로 저장하시겠습니까?","TEST","warning");
+	if (result) {
+		this.fn_save(); 
+	} else {
+		trace("저장 작업 취소");
+	}
+}
+
+/***************************************************
+* 함수명 : fn_checkVal 
+* 내  용 : 저장 시 유효성 검사
+****************************************************/
+this.fn_checkVal = function() {
+	var categoryId = this.ds_inv.getColumn(0, "CATEGORY_ID");
+	var houseId = this.ds_inv.getColumn(0, "WAREHOUSE_ID");
+	var productName = this.ds_inv.getColumn(0, "PRODUCT_NAME");
+	var amount = this.ds_inv.getColumn(0, "AMOUNT");
+	var price = this.ds_inv.getColumn(0, "PRICE");
+
+	if (!categoryId || categoryId == 0) {
+        return "카테고리란을 선택해 주세요."; 
+    }
+    if (!houseId || houseId == 0) {
+        return "상품란을 선택해 주세요."; 
+    }
+    if (!productName) {
+        return "상품명을 입력해 주세요."; 
+    }
+    if (!amount) {
+        return "수량을 입력해 주세요."; 
+    }
+    if (!price) {
+        return "가격을 입력해 주세요."; 
+    }
+    return null;
+}
+
+/***************************************************
+* 함수명 : fn_save 
+* 내  용 : 저장 트랜잭션
+****************************************************/
+this.fn_save = function() {
+	var strSvcId = "saveInventory";
+	var strSvcUrl = "http://localhost:8080/saveInventory";
+	var inData = "inDataset=ds_inv"
+	var outData = "";
+	var strAvg = "";
+	var callBackFnc = "fn_Callback_SaveInventory";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+
+/***************************************************
+* 함수명 : fn_Callback_SaveInventory 
+* 내  용 : (콜백) 저장 및 수정 완료 안내 메세지
+****************************************************/
+this.fn_Callback_SaveInventory = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		
+		//this.close();
+		this.ds_dummy.copyData(this.ds_inv);
+		if(this.opener && typeof this.opener.div_top_search_btn_onclick === 'function') {
+			alert("저장 및 수정 작업이 완료되었습니다.");
+			this.opener.div_top_search_btn_onclick();
+		}
+		if(flag == 1) {
+			this.close();
+		}
+	} else if(nErrorCode == -1) {
+		alert("ERROR")
+	}
+}
+
+/***************************************************
+* 함수명 : btn_delete_onclick 
+* 내  용 : 삭제 함수
+****************************************************/
+this.btn_delete_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	var result = application.confirm("정말로 삭제하시겠습니까?","TEST","warning");
+	if (result) {
+		this.fn_deleteInfo();
+	} else {
+		trace("삭제 작업 취소");
+	}
+}
+
+/***************************************************
+* 함수명 : fn_deleteInfo 
+* 내  용 : 삭제 트랜잭션
+****************************************************/
+this.fn_deleteInfo = function()
+{
+	var strSvcId = "delete";
+	var strSvcUrl = "http://localhost:8080/deleteInventory";
+	var inData = "inDataset=ds_inv"
+	var outData = "";
+	var strAvg = "";
+	var callBackFnc = "fn_Callback_Delete";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+
+/***************************************************
+* 함수명 : fn_Callback_Delete 
+* 내  용 : (콜백) 
+****************************************************/
+this.fn_Callback_Delete = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		this.close();
+		// 팝업 종료 후 부모폼 서치 트랜잭션 수행
+		if(this.opener && typeof this.opener.div_top_search_btn_onclick === 'function') {
+			alert("삭제가 완료되었습니다.");
+			this.opener.div_top_search_btn_onclick();
+		}
+	} 
+	if(nErrorCode == 1) {
+		if(this.opener && typeof this.opener.div_top_search_btn_onclick === 'function') {
+			alert("해당하는 상품이 주문목록에 존재합니다.");
+			this.opener.div_top_search_btn_onclick();
+		}
+	}
+	
+}
+
+/***************************************************
+* 함수명 : btn_list_onclick 
+* 내  용 : 목록으로 이동
+****************************************************/
+this.btn_list_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.close();
+}
+
+]]></Script>
+  </Form>
+</FDL>

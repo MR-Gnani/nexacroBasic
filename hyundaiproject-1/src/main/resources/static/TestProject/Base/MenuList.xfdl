@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="MenuList" left="0" top="0" width="1024" height="768" titletext="New Form">
+    <Layouts>
+      <Layout>
+        <Div id="div_menulist" left="0" top="0" right="0" bottom="0" taborder="0">
+          <Layouts>
+            <Layout>
+              <Button id="btn_pivot" taborder="0" text="피벗테이블" left="468" top="161" width="184" height="103" onclick="div_menulist_btn_pivot_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btn_emp" taborder="0" text="직원목록" left="40" top="25" width="184" height="103" onclick="btn_emp_onclick"/>
+        <Button id="btn_warehouse" taborder="1" text="창고목록" left="254" top="25" width="184" height="103" onclick="btn_warehouse_onclick"/>
+        <Button id="btn_categoryProduct" taborder="2" text="카테고리별상품목록" left="42" top="161" width="184" height="103" onclick="btn_categoryProduct_onclick"/>
+        <Button id="btn_inventory" taborder="3" text="재고목록" left="468" top="25" width="184" height="103" onclick="btn_inventory_onclick"/>
+        <Button id="btn_order" taborder="4" text="주문하기" left="253" top="161" width="184" height="103" onclick="btn_order_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.0"><![CDATA[
+this.btn_emp_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{	
+	this.div_menulist.set_url("Base::base_emp.xfdl");
+	
+	this.btn_emp.set_visible(false);
+	this.btn_warehouse.set_visible(false);
+	this.btn_inventory.set_visible(false);
+	this.btn_order.set_visible(false);
+	this.btn_categoryProduct.set_visible(false);
+}
+
+this.btn_warehouse_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.div_menulist.set_url("Base::wharehouse.xfdl");
+	
+	this.btn_emp.set_visible(false);
+	this.btn_warehouse.set_visible(false);
+	this.btn_inventory.set_visible(false);
+	this.btn_order.set_visible(false);
+	this.btn_categoryProduct.set_visible(false);
+}
+
+this.btn_inventory_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.div_menulist.set_url("Base::product.xfdl");
+	
+	this.btn_emp.set_visible(false);
+	this.btn_warehouse.set_visible(false);
+	this.btn_inventory.set_visible(false);
+	this.btn_order.set_visible(false);
+	this.btn_categoryProduct.set_visible(false);
+}
+
+this.btn_categoryProduct_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.div_menulist.set_url("Base::orderlist.xfdl");
+	
+	this.btn_emp.set_visible(false);
+	this.btn_warehouse.set_visible(false);
+	this.btn_inventory.set_visible(false);
+	this.btn_order.set_visible(false);
+	this.btn_categoryProduct.set_visible(false);
+}
+
+
+this.btn_order_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.div_menulist.set_url("Base::ordercustom.xfdl");
+	
+	this.btn_emp.set_visible(false);
+	this.btn_warehouse.set_visible(false);
+	this.btn_inventory.set_visible(false);
+	this.btn_order.set_visible(false);
+	this.btn_categoryProduct.set_visible(false);
+}
+
+
+this.div_menulist_btn_pivot_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+    this.div_menulist.set_url("Base::pivot.xfdl");
+	
+	this.btn_emp.set_visible(false);
+	this.btn_warehouse.set_visible(false);
+	this.btn_inventory.set_visible(false);
+	this.btn_order.set_visible(false);
+	this.btn_categoryProduct.set_visible(false);
+}
+]]></Script>
+  </Form>
+</FDL>

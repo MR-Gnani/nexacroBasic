@@ -1,0 +1,56 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8
+      enabled: true
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+    resources:
+      static:
+        add-mappings: true
+        static:
+          locations: classpath:/static/
+
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: c##nani
+    password: 1234
+
+  jpa:
+    open-in-view: true
+    #show-sql: true
+    properties:
+      hibernate:
+        #format_sql: true
+        #highlight_sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+   
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        SQL: DEBUG
+#        type:
+#          descriptor:
+#            sql:
+#              BasicBinder: TRACE
+              
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 3MB
+
+  security:
+    user:
+      name: test
+      password: 1234

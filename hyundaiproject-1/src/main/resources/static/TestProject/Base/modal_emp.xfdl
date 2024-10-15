@@ -1,0 +1,538 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="modal_emp" left="0" top="0" width="915" height="300" titletext="New Form" onload="modal_emp_onload" onclose="modal_emp_onclose">
+    <Layouts>
+      <Layout>
+        <Static id="Static00" taborder="25" text="▣  직원 등록" top="16" right="622" height="28" style="background:transparent;font:bold 16 Dotum;" onclick="Static00_onclick" left="20"/>
+        <Static id="Static01" taborder="3" left="20" top="46" right="20" height="24" style="background:white;border:1 solid #808080ff ;"/>
+        <Static id="Static02" taborder="4" left="20" top="69" right="20" height="24" style="background:white;border:1 solid #808080ff ;" onclick="Static02_onclick"/>
+        <Static id="Static03" taborder="5" left="20" top="92" right="20" height="24" style="background:white;border:1 solid #808080ff ;"/>
+        <Static id="Static04" taborder="6" left="20" top="115" right="20" height="24" style="background:white;border:1 solid #808080ff ;"/>
+        <Static id="Static05" taborder="7" left="20" top="138" right="20" style="background:#c0c0c0ff;border:1 solid #808080ff ;align:center;font:bold 14 Dotum;" text="file upload" bottom="20"/>
+        <Static id="Static06" taborder="8" text="관리번호" left="20" top="46" height="24" style="background:moccasin;border:1 solid #808080ff ;padding:0 2 0 0;align:right middle;font:bold 9 Dotum;" onclick="Static06_onclick" width="136"/>
+        <Static id="Static07" taborder="9" text="이름" left="20" top="69" height="24" style="background:moccasin;border:1 solid #808080ff ;padding:0 2 0 0;align:right middle;font:bold 9 Dotum;" width="136"/>
+        <Static id="Static08" taborder="10" text="EMAIL" left="20" top="92" height="24" style="background:moccasin;border:1 solid #808080ff ;padding:0 2 0 0;align:right middle;font:bold 9 Dotum;" width="136"/>
+        <Static id="Static09" taborder="11" text="PHONE" left="20" top="115" height="24" style="background:moccasin;border:1 solid #808080ff ;padding:0 2 0 0;align:right middle;font:bold 9 Dotum;" width="136"/>
+        <Static id="Static10" taborder="12" text="관리자" left="494" top="46" right="271" height="24" style="background:moccasin;border:1 solid #808080ff ;padding:0 2 0 0;align:right middle;font:bold 9 Dotum;"/>
+        <Static id="Static11" taborder="13" text="직책" left="494" top="69" right="271" height="24" style="background:moccasin;border:1 solid #808080ff ;padding:0 2 0 0;align:right middle;font:bold 9 Dotum;"/>
+        <Static id="Static12" taborder="14" text="고용일" left="494" top="92" right="271" height="24" style="background:moccasin;border:1 solid #808080ff ;padding:0 2 0 0;align:right middle;font:bold 9 Dotum;"/>
+        <Edit id="modal_id" taborder="15" left="158" top="48" right="423" height="20" oneditclick="Edit00_oneditclick" enable="false"/>
+        <Edit id="edt_Fname" taborder="17" left="158" top="71" right="589" height="20" displaynulltext="First name" style="displaynulltextcolor:darkgray;color:black;align:left;" maxlength="30" onchanged="edt_Fname_onchanged"/>
+        <Edit id="edt_email" taborder="20" left="158" top="94" right="599" height="20" oneditclick="modal_email_oneditclick" maxlength="30" onchanged="edt_email_onchanged"/>
+        <Edit id="edt_phone" taborder="23" left="158" top="117" height="20" oneditclick="Edit03_oneditclick" inputtype="number" maxlength="20" style="align:left middle;" ontextchanged="edt_phone_ontextchanged" onchanged="edt_phone_onchanged" right="22"/>
+        <Combo id="cbo_mgr" taborder="16" left="646" top="48" height="20" codecolumn="MANAGER_ID" innerdataset="@ds_mgr2" datacolumn="FIRST_NAME" index="-1" width="246" onitemchanged="cbo_mgr_onitemchanged"/>
+        <Combo id="cbo_job" taborder="19" left="646" top="71" height="20" innerdataset="@ds_job2" codecolumn="JOB_TITLE" datacolumn="JOB_TITLE" index="-1" width="246" onitemchanged="cbo_job_onitemchanged"/>
+        <Calendar id="cal_hireDate" taborder="22" left="646" top="94" height="20" dateformat="yyyy-MM-dd" value="null" style="padding:0 5 0 0;" width="246" onchanged="cal_hireDate_onchanged"/>
+        <Edit id="edt_Lname" taborder="18" left="328" top="71" right="423" height="20" style="displaynulltextcolor:darkgray;color:black;align:left;" displaynulltext="Last name" oneditclick="modal_Lname_oneditclick" maxlength="30" onchanged="edt_Lname_onchanged"/>
+        <Static id="Static13" taborder="24" text="@" left="320" top="94" right="576" height="24" style="font:14 Dotum;"/>
+        <Combo id="cbo_email" taborder="21" left="341" top="94" right="423" height="20" codecolumn="EMAIL_DOMAIN" datacolumn="EMAIL_DOMAIN" innerdataset="@ds_email" onitemchanged="cbo_email_onitemchanged"/>
+        <Div id="Div00" taborder="29" text="Div00" top="16" right="20" height="28" width="400">
+          <Layouts>
+            <Layout width="400" height="28">
+              <Button id="btn_update" taborder="0" text="수정" onclick="btn_update_onclick" top="3" right="0" width="60" height="24" style="background:#4f81bdff;border:0 solid black ;color:#ffffffff;font:9 Dotum;cursor:hand;"/>
+              <Button id="btn_save" taborder="1" text="저장" onclick="btn_save_onclick" top="3" right="0" width="60" height="24" style="background:#4f81bdff;border:0 solid black ;color:#ffffffff;font:9 Dotum;cursor:hand;"/>
+              <Button id="btn_delete" taborder="2" text="삭제" onclick="btn_delete_onclick" top="3" right="62" width="60" height="24" style="background:#4f81bdff;border:0 solid black ;color:#ffffffff;font:9 Dotum;cursor:hand;"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_emp">
+        <ColumnInfo>
+          <Column id="EMPLOYEE_ID" type="INT" size="256"/>
+          <Column id="LAST_NAME" type="STRING" size="256"/>
+          <Column id="FIRST_NAME" type="STRING" size="256"/>
+          <Column id="EMAIL" type="STRING" size="256"/>
+          <Column id="PHONE" type="STRING" size="256"/>
+          <Column id="HIRE_DATE" type="STRING" size="256"/>
+          <Column id="MANAGER_ID_S" type="STRING" size="256"/>
+          <Column id="MANAGER_ID" type="STRING" size="256"/>
+          <Column id="JOB_TITLE" type="STRING" size="256"/>
+          <Column id="EMAIL_DOMAIN" type="STRING" size="256"/>
+          <Column id="FULL_NAME" type="STRING" size="256"/>
+          <Column id="FULL_EMAIL" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_mgr2">
+        <ColumnInfo>
+          <Column id="MANAGER_ID" type="STRING" size="256"/>
+          <Column id="FIRST_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_job2">
+        <ColumnInfo>
+          <Column id="JOB_TITLE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_email">
+        <ColumnInfo>
+          <Column id="EMAIL_DOMAIN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_emp_copy">
+        <ColumnInfo>
+          <Column id="EMPLOYEE_ID" type="INT" size="256"/>
+          <Column id="LAST_NAME" type="STRING" size="256"/>
+          <Column id="FIRST_NAME" type="STRING" size="256"/>
+          <Column id="EMAIL" type="STRING" size="256"/>
+          <Column id="PHONE" type="STRING" size="256"/>
+          <Column id="HIRE_DATE" type="STRING" size="256"/>
+          <Column id="MANAGER_ID_S" type="STRING" size="256"/>
+          <Column id="MANAGER_ID" type="STRING" size="256"/>
+          <Column id="JOB_TITLE" type="STRING" size="256"/>
+          <Column id="EMAIL_DOMAIN" type="STRING" size="256"/>
+          <Column id="FULL_NAME" type="STRING" size="256"/>
+          <Column id="FULL_EMAIL" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="modal_id" propid="value" datasetid="ds_emp_copy" columnid="EMPLOYEE_ID"/>
+      <BindItem id="item1" compid="edt_Fname" propid="value" datasetid="ds_emp_copy" columnid="FIRST_NAME"/>
+      <BindItem id="item2" compid="edt_Lname" propid="value" datasetid="ds_emp_copy" columnid="LAST_NAME"/>
+      <BindItem id="item3" compid="edt_email" propid="value" datasetid="ds_emp_copy" columnid="EMAIL"/>
+      <BindItem id="item4" compid="cbo_email" propid="value" datasetid="ds_emp_copy" columnid="EMAIL_DOMAIN"/>
+      <BindItem id="item5" compid="edt_phone" propid="value" datasetid="ds_emp_copy" columnid="PHONE"/>
+      <BindItem id="item7" compid="cbo_job" propid="value" datasetid="ds_emp_copy" columnid="JOB_TITLE"/>
+      <BindItem id="item8" compid="cal_hireDate" propid="value" datasetid="ds_emp_copy" columnid="HIRE_DATE"/>
+      <BindItem id="item6" compid="cbo_mgr" propid="value" datasetid="ds_emp_copy" columnid="MANAGER_ID"/>
+    </Bind>
+    <InitValue>
+      <Combo id="cbo_email" innerdataset="@ds_email" codecolumn="EMAIL_DOMAIN" datacolumn="EMAIL_DOMAIN"/>
+    </InitValue>
+    <Script type="xscript5.0"><![CDATA[/*
+화면명 : 직원 정보 등록 화면
+작성자 : 김진한
+작성일자 : 2024/09/09
+*/
+
+
+/***************************************************
+* 함수명 : modal_emp_onload (팝업 로드)
+* 내  용 : 로드시 데이터셋가져오기, 입력 폼 셋팅(이메일, 전화번호, 성-이름)
+****************************************************/
+this.modal_emp_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{   
+	// 부모폼에서 매니저 직업 데이터셋 가져오기
+	this.ds_mgr2.copyData(this.opener.ds_mgr);
+	this.ds_job2.copyData(this.opener.ds_job);
+	this.ds_email.copyData(this.opener.ds_email);
+	
+	// 콤보박스 클릭 시 "- 선택 -" 값 보이게
+	this.cbo_mgr.set_index(0);
+	this.cbo_job.set_index(0);
+	this.cbo_email.set_index(0);
+	
+	// 첫 번쨰 매니저 데이터 값이 없을 때만 "- 선택 -" 삽입, 중복 방지
+	var existingMgr = this.ds_mgr2.getColumn(0, "MANAGER_ID");	
+	if (existingMgr == "") {
+		this.ds_mgr2.setColumn(0, "FIRST_NAME", "- 선택 -");
+	}
+	
+	// 부모 폼에서 등록 클릭, 그리드 셀 클릭 분기 처리 
+	if (!this.opener.ds_selected || this.opener.ds_selected.rowcount === 0) {
+		trace("데이터 없음!!")
+		this.Div00.btn_update.set_visible(false);
+		this.Div00.btn_delete.set_visible(false);
+		return;
+	} else {
+		trace("데이터 있음!!")
+		this.ds_emp.copyData(this.opener.ds_selected);
+		this.Div00.btn_save.set_visible(false);
+	}
+	
+	// PRESIDENT 일시 mgr콤보박스 enable
+	var job = this.ds_emp.getColumn(0, "JOB_TITLE");
+	if(job == "PRESIDENT") {
+		this.cbo_mgr.set_enable();
+		}
+	
+	// 날짜, 전화 번호, 이메일, 이름 양식에 맞게 셋팅
+	var date = this.ds_emp.getColumn(0, "HIRE_DATE");
+	var phone = this.ds_emp.getColumn(0, "PHONE");
+	var email = this.ds_emp.getColumn(0,"EMAIL");
+	var fullName = this.ds_emp.getColumn(0, "FIRST_NAME");
+	var mgrName = this.ds_emp.getColumn(0, "MANAGER_ID");
+	
+	//매니저
+	var row = this.ds_mgr2.findRow("FIRST_NAME", mgrName);
+	var MgrId = this.ds_mgr2.getColumn(row, "MANAGER_ID");	
+	//날짜
+	var formattedDate = date.replace(/\D/g, '');
+	//이름
+	nIndex = fullName.split(" ");
+	//이메일
+	eIndex = email.split("@");
+	
+	this.ds_emp.setColumn(0, "HIRE_DATE", formattedDate);
+	this.ds_emp.setColumn(0, "FIRST_NAME", nIndex[0]);
+	this.ds_emp.setColumn(0, "LAST_NAME", nIndex[1]);
+	this.ds_emp.setColumn(0, "EMAIL", eIndex[0]);
+	
+	this.ds_emp.addColumn("MANAGER_ID","INT");
+	this.ds_emp.setColumn(0, "MANAGER_ID", MgrId);
+	
+	this.ds_emp.addColumn("EMAIL_DOMAIN","STRING");
+	this.ds_emp.setColumn(0, "EMAIL_DOMAIN", eIndex[1]);
+	/*this.cbo_email.set_value(eIndex[1]);*/
+	
+	this.ds_emp_copy.copyData(this.ds_emp);
+	var rowType = this.ds_emp_copy.getRowType();
+	
+}
+
+
+/***************************************************
+* 함수명 : btn_save_onclick 
+* 내  용 : 저장 버튼(신규 등록), 필드값 체크, 유효성
+****************************************************/
+this.btn_save_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	// 필수 필드 값 확인
+    var firstName = this.ds_emp_copy.getColumn(0, "FIRST_NAME");
+    var lastName = this.ds_emp_copy.getColumn(0, "LAST_NAME");
+    var email = this.ds_emp_copy.getColumn(0, "EMAIL");
+    var emailDomain = this.ds_emp_copy.getColumn(0, "EMAIL_DOMAIN");
+    var phone = this.ds_emp_copy.getColumn(0, "PHONE");
+    var managerId = this.ds_emp_copy.getColumn(0, "MANAGER_ID");
+    var jobTitle = this.ds_emp_copy.getColumn(0, "JOB_TITLE");
+    var hireDate = this.ds_emp_copy.getColumn(0, "HIRE_DATE");
+    
+    // 유효성 검사 및 알림 표시
+	if (!managerId) {
+		if(jobTitle != "PRESIDENT"){
+			alert("관리자를 선택해 주세요.");
+			return;
+		}
+	}
+		
+    if (!firstName) {
+        alert("FIRST NAME을 입력해 주세요.");
+        return;
+    }
+    if (!lastName) {
+        alert("LAST NAME을 입력해 주세요.");
+        return;
+    }
+    if (!jobTitle || jobTitle == "- 선택 -") {
+        alert("직책을 선택해 주세요.");
+        return;
+    }
+    if (!email) {
+        alert("이메일을 입력해 주세요.");
+        return;
+    }
+    if (!emailDomain || emailDomain == "- 선택 -") {
+        alert("이메일 도메인을 선택해주세요.");
+        return;
+    }
+    if (!hireDate) {
+        alert("고용일을 입력해 주세요.");
+        return;
+    }
+    if (hireDate < 19000000) {
+		alert("1900년도 이후의 날짜만 입력이 가능합니다.");
+		return;
+    }
+    if (!phone) {
+        alert("전화번호를 입력해 주세요.");
+        return;
+    }
+    
+    var result = application.confirm("정말로 저장하시겠습니까?","TEST","warning");
+	if (result) {
+		this.fn_addInfo();
+	} else {
+		trace("저장 작업 취소");
+	}
+}
+/***************************************************
+* 함수명 : fn_addInfo 
+* 내  용 : 등록(트랜잭션)
+****************************************************/
+this.fn_addInfo = function() {
+	var strSvcId = "insertEmployees";
+	var strSvcUrl = "http://localhost:8080/insertEmployees";
+	var inData = "inDataset=ds_emp_copy"
+	var outData = "";
+	var strAvg = "";
+	var callBackFnc = "fn_Callback_Add";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+/***************************************************
+* 함수명 : fn_Callback_Add 
+* 내  용 : (콜백) 모달창 닫고 재조회
+****************************************************/
+this.fn_Callback_Add = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		this.close();
+		if(this.opener && typeof this.opener.btn_search_onclick === 'function') {
+			alert("저장이 완료되었습니다.");
+			this.opener.btn_search_onclick();
+		}
+	} 
+}
+
+
+/***************************************************
+* 함수명 : btn_update_onclick 
+* 내  용 : 수정 버튼(기존 정보 수정), 필드값, 유효성체크
+****************************************************/
+this.btn_update_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{	
+	var rowType = this.ds_emp_copy.getRowType();
+	
+	if(rowType == 1) {
+		alert("수정된 사항이 없습니다.");
+		return;
+	}
+	
+	// 필수 필드 값 확인
+    var firstName = this.ds_emp_copy.getColumn(0, "FIRST_NAME");
+    var lastName = this.ds_emp_copy.getColumn(0, "LAST_NAME");
+    var email = this.ds_emp_copy.getColumn(0, "EMAIL");
+    var emailDomain = this.ds_emp_copy.getColumn(0, "EMAIL_DOMAIN");
+    var phone = this.ds_emp_copy.getColumn(0, "PHONE");
+    var managerId = this.ds_emp_copy.getColumn(0, "MANAGER_ID");
+    var jobTitle = this.ds_emp_copy.getColumn(0, "JOB_TITLE");
+    var hireDate = this.ds_emp_copy.getColumn(0, "HIRE_DATE");
+    
+    // 유효성 검사 및 알림 표시
+	if (!managerId) {
+		if(jobTitle != "PRESIDENT"){
+			alert("관리자를 선택해 주세요.");
+			return;
+		}
+	}
+    if (!firstName) {
+        alert("First Name 을 입력해 주세요.");
+        return;
+    }
+    if (!lastName) {
+        alert("Last Name 을 입력해 주세요.");
+        return;
+    }
+    if (!jobTitle || jobTitle == "- 선택 -") {
+        alert("직책을 선택해 주세요.");
+        return;
+    }
+    if (!email) {
+        alert("이메일을 입력해 주세요.");
+        return;
+    }
+    if (!emailDomain || emailDomain == "- 선택 -") {
+        alert("이메일 도메인을 선택해주세요.");
+        return;
+    }
+    if (!hireDate) {
+        alert("고용일을 입력해 주세요.");
+        return;
+    }
+    if (!phone) {
+        alert("전화번호를 입력해 주세요.");
+        return;
+    }
+    
+    var result = application.confirm("정말로 수정하시겠습니까?","TEST","warning");
+	if (result) {
+		this.fn_updateInfo();
+	} else {
+		trace("수정 작업 취소");
+	}
+	
+}
+/***************************************************
+* 함수명 : fn_addInfo 
+* 내  용 : 수정(트랜잭션)
+****************************************************/
+this.fn_updateInfo = function()
+{
+	var strSvcId = "update";
+	var strSvcUrl = "http://localhost:8080/update";
+	var inData = "inDataset=ds_emp_copy"
+	var outData = "ds_emp_copy=outDataset, ds_mgr2=outDataset2";
+	var strAvg = "";
+	var callBackFnc = "fn_Callback_Update";
+	 
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+/***************************************************
+* 함수명 : fn_Callback_Update 
+* 내  용 : (콜백) 수정시 모달창 닫기, 재조회
+****************************************************/
+this.fn_Callback_Update = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		if(this.opener && typeof this.opener.btn_search_onclick === 'function') {
+			alert("수정이 완료되었습니다.");
+			this.opener.fn_loadMgrJobData();
+			this.opener.btn_search_onclick();
+		}
+		this.loadMgrData();
+	}
+}
+
+this.loadMgrData = function(){
+	var strSvcId = "managerInfo";
+	var strSvcUrl = "http://localhost:8080/mgrInfo";
+	var inData = ""
+	var outData = "ds_mgr2=outDataset";
+	var strAvg = "";
+	var callBackFnc = "fn_callback_loadMgrInfo";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+
+this.fn_callback_loadMgrInfo = function(){
+	var existingManagerId = this.ds_mgr2.getColumn(0, "MANAGER_ID");
+
+		if (existingManagerId !== "") {
+            var newRow = this.ds_mgr2.insertRow(0);
+            this.ds_mgr2.setColumn(newRow, "MANAGER_ID", "");
+            this.ds_mgr2.setColumn(newRow, "FIRST_NAME", "- 선택 -");
+        }
+}
+
+
+/***************************************************
+* 함수명 : onchanged 
+* 내  용 : 각필드 수정 및 입력값 ds_emp 데이터 셋에 셋팅
+****************************************************/
+this.edt_Fname_onchanged = function(obj:Edit, e:nexacro.ChangeEventInfo)
+{
+	var newFname = obj.value;
+	this.ds_emp_copy.setColumn(0, "FIRST_NAME", newFname);
+}
+this.edt_Lname_onchanged = function(obj:Edit, e:nexacro.ChangeEventInfo)
+{
+	var newLname = obj.value;
+	this.ds_emp_copy.setColumn(0, "LAST_NAME", newLname);
+}
+this.edt_email_onchanged = function(obj:Edit, e:nexacro.ChangeEventInfo)
+{
+	var newEmail = obj.value;
+	this.ds_emp_copy.setColumn(0, "EMAIL", newEmail);
+}
+this.cbo_email_onitemchanged = function(obj:Combo, e:nexacro.ItemChangeEventInfo)
+{
+	var newEdomain = obj.value;
+	this.ds_emp_copy.setColumn(0, "EMAIL_DOMAIN", newEdomain);
+}
+// 전화번호 포맷팅
+this.edt_phone_ontextchanged = function(obj:Edit, e:nexacro.TextChangedEventInfo)
+{
+	var rawValue = obj.value.replace(/\D/g, '');
+	var formattedValue = '';
+
+    if (rawValue.length > 3) {
+        formattedValue += rawValue.substring(0, 3) + '-';
+        if (rawValue.length > 7) {
+            formattedValue += rawValue.substring(3, 7) + '-';
+            formattedValue += rawValue.substring(7, 11);
+        } else {
+            formattedValue += rawValue.substring(3);
+        }
+    } else {
+        formattedValue = rawValue;
+    }
+    // 포맷된 값을 EditBox에 설정
+    obj.set_value(formattedValue);
+}
+this.edt_phone_onchanged = function(obj:Edit, e:nexacro.ChangeEventInfo)
+{
+	var newPhone = obj.value;
+	this.ds_emp_copy.setColumn(0, "PHONE", newPhone);
+}
+this.cbo_mgr_onitemchanged = function(obj:Combo, e:nexacro.ItemChangeEventInfo)
+{
+	var newMgr = obj.value;
+	var row = this.ds_mgr2.findRow("MANAGER_ID", newMgr);
+	if (row>=0) {
+		  var MgrId = this.ds_mgr2.getColumn(row, "MANAGER_ID");
+		  this.ds_emp_copy.addColumn("MANAGER_ID","INT");
+		  this.ds_emp_copy.setColumn(0, "MANAGER_ID", MgrId)
+		} 
+}
+this.cbo_job_onitemchanged = function(obj:Combo, e:nexacro.ItemChangeEventInfo)
+{
+	var newJob = obj.value;
+	if(newJob == "PRESIDENT") {
+		this.ds_emp_copy.setColumn(0, "MANAGER_ID", "");
+		this.cbo_mgr.set_enable(false);
+	} else {
+		this.cbo_mgr.set_index(0);
+		this.cbo_mgr.set_enable(true);
+	}
+	this.ds_emp_copy.setColumn(0, "JOB_TITLE", newJob);
+	
+}
+this.cal_hireDate_onchanged = function(obj:Calendar, e:nexacro.ChangeEventInfo)
+{
+	var newHdate = obj.value;
+	this.ds_emp_copy.setColumn(0, "HIRE_DATE", newHdate);
+}
+
+
+/***************************************************
+* 함수명 : btn_delete_onclick
+* 내  용 : 삭제 버튼
+****************************************************/
+this.btn_delete_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	var result = application.confirm("정말로 삭제하시겠습니까?","TEST","warning");
+	if (result) {
+		this.fn_deleteInfo();
+	} else {
+		trace("삭제 작업 취소");
+	}
+}
+/***************************************************
+* 함수명 : fn_deleteInfo
+* 내  용 : 삭제(트랜잭션)
+****************************************************/
+this.fn_deleteInfo = function()
+{
+	var strSvcId = "delete";
+	var strSvcUrl = "http://localhost:8080/delete";
+	var inData = "inDataset=ds_emp_copy"
+	var outData = "";
+	var strAvg = "";
+	var callBackFnc = "fn_Callback_Delete";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+/***************************************************
+* 함수명 : fn_Callback_Delete
+* 내  용 : (콜백) 삭제 후 팝업 종료, 재조회
+****************************************************/
+this.fn_Callback_Delete = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		this.close();
+		// 팝업 종료 후 부모폼 서치 트랜잭션 수행
+		if(this.opener && typeof this.opener.btn_search_onclick === 'function') {
+			alert("삭제가 완료되었습니다.");
+			this.opener.btn_search_onclick();
+		}
+	}
+}
+
+/***************************************************
+* 함수명 : modal_emp_onclose
+* 내  용 : 모달이 닫힐 때 데이터 셋 초기화
+****************************************************/
+this.modal_emp_onclose = function(obj:Form, e:nexacro.CloseEventInfo)
+{
+	this.ds_emp.clearData();
+}
+
+]]></Script>
+  </Form>
+</FDL>

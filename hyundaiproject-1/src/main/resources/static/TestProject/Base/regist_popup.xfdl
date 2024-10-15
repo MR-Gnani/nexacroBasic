@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="regist_popup" left="0" top="0" width="648" height="185" titletext="New Form" onload="regist_popup_onload" style="padding:0 0 0 0;">
+    <Layouts>
+      <Layout>
+        <Static id="st_title" taborder="0" text="▣ 일괄 변경" left="20" top="10" width="172" height="43" style="font:bold 16 Dotum;"/>
+        <Button id="btn_save" taborder="1" text="저장" top="20" width="60" height="24" right="20" style="background:#4f81bdff;color:#ffffffff;font:9 Dotum;cursor:hand;" onclick="btn_save_onclick"/>
+        <Div id="div_product" taborder="3" text="Div01" left="20" top="71" height="24" style="border:1 solid #808080ff ;" right="20">
+          <Layouts>
+            <Layout>
+              <Static id="st_productName" taborder="0" text="상품명" left="0" top="0" width="120" style="background:moccasin;align:center;font:bold 11 Dotum;" bottom="0"/>
+              <Edit id="edt_productId" taborder="1" left="121" top="1" width="133" readonly="true" style="background:lightgrey;border:1 solid black ;color:#000000ff;align:right middle;font:bold 10 Dotum;" bottom="1" displaynulltext=" 상품ID" ondragleave="Div01_Edit00_ondragleave"/>
+              <Combo id="cbo_productName" taborder="2" left="255" top="1" bottom="1" right="1" innerdataset="@ds_product" codecolumn="PRODUCT_ID" datacolumn="PRODUCT_NAME" onitemchanged="div_product_cbo_productName_onitemchanged"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div_minQuantity" taborder="4" text="Div02" left="20" top="94" height="24" style="border:1 solid #808080ff ;" right="20">
+          <Layouts>
+            <Layout>
+              <Static id="st_minName" taborder="0" text="최소 수량" left="0" top="0" width="120" style="background:moccasin;align:center;font:bold 11 Dotum;" bottom="0"/>
+              <Edit id="edt_minQuantity" taborder="1" left="121" top="1" readonly="true" style="background:lightgrey;border:1 solid black ;color:#000000ff;align:right middle;font:bold 9 Dotum;" bottom="1" right="1"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div_maxQuantity" taborder="5" text="Div03" left="20" top="117" height="24" style="border:1 solid #808080ff ;" right="20">
+          <Layouts>
+            <Layout>
+              <Static id="st_maxName" taborder="0" text="최대 수량" left="0" top="0" width="120" style="background:moccasin;align:center;font:bold 11 Dotum;" bottom="0"/>
+              <Edit id="edt_maxQuantity" taborder="1" left="121" top="1" readonly="true" style="background:lightgrey;border:1 solid black ;color:#000000ff;align:right middle;font:bold 9 Dotum;" bottom="1" right="1"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="Div04" taborder="6" text="Div04" left="20" top="140" height="24" style="border:1 solid #808080ff ;" right="20">
+          <Layouts>
+            <Layout>
+              <Static id="st_amount" taborder="0" text="수량" left="0" top="0" width="120" style="background:moccasin;align:center;font:bold 11 Dotum;" bottom="0"/>
+              <Edit id="edt_amount" taborder="1" left="121" top="1" right="1" bottom="1" style="align:right middle;" ontextchanged="Div04_edt_amount_ontextchanged" maxlength="10"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div_category" taborder="8" left="20" top="48" right="20" height="24" style="border:1 solid #808080ff ;">
+          <Layouts>
+            <Layout>
+              <Combo id="cbo_cateogoryName" taborder="0" innerdataset="@ds_category_val" codecolumn="CATEGORY_ID" datacolumn="CATEGORY_NAME" top="1" right="1" bottom="1" onitemchanged="div_category_cbo_cateogoryName_onitemchanged" left="121"/>
+              <Static id="st_cateogryName" taborder="1" text="카테고리명" left="0" top="0" bottom="0" width="120" style="background:moccasin;align:middle;font:bold 10 Dotum;"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_regist">
+        <ColumnInfo>
+          <Column id="CATEGORY_NAME" type="STRING" size="256"/>
+          <Column id="PRODUCT_NAME" type="STRING" size="256"/>
+          <Column id="AMOUNT" type="STRING" size="256"/>
+          <Column id="PRODUCT_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_category_val">
+        <ColumnInfo>
+          <Column id="CATEGORY_ID" type="STRING" size="256"/>
+          <Column id="CATEGORY_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_product">
+        <ColumnInfo>
+          <Column id="PRODUCT_ID" type="STRING" size="256"/>
+          <Column id="PRODUCT_NAME" type="STRING" size="256"/>
+          <Column id="CATEGORY_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_quantity">
+        <ColumnInfo>
+          <Column id="MAX_QUANTITY" type="STRING" size="256"/>
+          <Column id="MIN_QUANTITY" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="Div00.Combo00" propid="value" datasetid="ds_regist" columnid="CATEGORY_NAME"/>
+      <BindItem id="item1" compid="Div01.Edit00" propid="value" datasetid="ds_regist" columnid="PRODUCT_ID"/>
+      <BindItem id="item2" compid="Div04.edt_amount" propid="value" datasetid="ds_regist" columnid="AMOUNT"/>
+      <BindItem id="item3" compid="Div01.Combo00" propid="value" datasetid="ds_regist" columnid="PRODUCT_NAME"/>
+      <BindItem id="item4" compid="Div02.Edit00" propid="value" datasetid="ds_quantity" columnid="MIN_QUANTITY"/>
+      <BindItem id="item5" compid="Div03.Edit00" propid="value" datasetid="ds_quantity" columnid="MAX_QUANTITY"/>
+      <BindItem id="item6" compid="div_category.cbo_cateogoryName" propid="value" datasetid="ds_regist" columnid="CATEGORY_NAME"/>
+      <BindItem id="item7" compid="div_product.cbo_productName" propid="value" datasetid="ds_regist" columnid="PRODUCT_NAME"/>
+      <BindItem id="item8" compid="div_minQuantity.edt_minQuantity" propid="value" datasetid="ds_quantity" columnid="MIN_QUANTITY"/>
+      <BindItem id="item9" compid="div_maxQuantity.edt_maxQuantity" propid="value" datasetid="ds_quantity" columnid="MAX_QUANTITY"/>
+      <BindItem id="item10" compid="div_product.edt_productId" propid="value" datasetid="ds_regist" columnid="PRODUCT_ID"/>
+    </Bind>
+    <Script type="xscript5.0"><![CDATA[/*
+화면명 : 재고 일괄 등록 팝업
+작성자 : 김진한
+작성일자 : 2024/09/11
+*/
+
+
+/***************************************************
+* 함수명 : regist_popup_onload (팝업 로드)
+* 내  용 : fn_loadData(트랜잭션 호출), fn_Callback_Onload(콜백)
+****************************************************/
+this.regist_popup_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	trace("LOAD COMPELETE");
+	this.ds_category_val.copyData(this.opener.ds_category); // 카테고리DS 가져오기
+	this.fn_loadData(); // 상품명,카테고리ID
+}
+this.fn_loadData = function(){
+	var strSvcId = "loadProductData";
+	var strSvcUrl = "http://localhost:8080/productData";
+	var inData = ""
+	var outData = "ds_product=outDataset";
+	var strAvg = "";
+	var callBackFnc = "fn_CallbackOnload";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+this.fn_CallbackOnload = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		var existingCategory = this.ds_category_val.getColumn(0, "CATEGORY_NAME");
+		var existingProduct = this.ds_product.getColumn(0, "PRODUCT_NAME");
+		
+		// 부모 창에서 전체 가 있기 때문에 새로 삽입 필요x
+		if (existingCategory == "- 전체 -") {
+			this.ds_category_val.setColumn(0, "CATEGORY_NAME", "-선택-");
+        }
+        // 가져오는 데이터가 없기 때문에 새로 삽입, 중복 추가 방지
+        if (existingProduct !== "- 선택 -") {
+			var newRow = this.ds_product.insertRow(0);
+			this.ds_product.setColumn(newRow, "PRODUCT_ID", "");
+			this.ds_product.setColumn(newRow, "PRODUCT_NAME", "- 선택 -");
+        }
+        this.div_category.cbo_cateogoryName.set_index(0);
+        this.div_product.cbo_productName.set_index(0);
+	}
+}
+
+/***************************************************
+* 함수명 : div_category_cbo_cateogoryName_onitemchanged, filterCategoryById
+* 내  용 : 카테고리 id에 맞는 상품목록 콤보박스 동기화
+****************************************************/
+this.div_category_cbo_cateogoryName_onitemchanged = function(obj:Combo, e:nexacro.ItemChangeEventInfo)
+{	
+	var categoryId = obj.value;
+	this.filterCategoryById(categoryId);
+}
+this.filterCategoryById = function (categoryId) {
+	this.ds_product.set_enableevent(false);
+	var filterExprProduct = "CATEGORY_ID == '" + categoryId + "'";
+	this.ds_product.filter(filterExprProduct);
+	this.ds_product.set_enableevent(true);
+}
+
+
+/***************************************************
+* 함수명 : div_product_cbo_productName_onitemchanged
+* 내  용 : 최대최소 수량 가져오기 ,fn_loadQuantityData(트랜잭션), fn_CallbackQuantity(콜백)
+****************************************************/
+this.div_product_cbo_productName_onitemchanged = function(obj:Combo, e:nexacro.ItemChangeEventInfo)
+{
+	var productId = obj.value;
+	this.ds_regist.setColumn(0, "PRODUCT_ID", productId);
+	this.fn_loadQuantityData();
+}
+this.fn_loadQuantityData = function() {
+	var strSvcId = "loadQuantity";
+	var strSvcUrl = "http://localhost:8080/getMaxMinQuantity";
+	var inData = "inDataset=ds_regist"
+	var outData = "ds_quantity=outDataset";
+	var strAvg = "";
+	var callBackFnc = "fn_CallbackQuantity";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+this.fn_CallbackQuantity = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+	} 
+}
+
+
+/***************************************************
+* 함수명 : btn_save_onclick
+* 내  용 : 저장, fn_checkVal(유효성검사), fn_saveFn(트랜잭션), fn_CallbackBatchRegist(콜백)
+****************************************************/
+this.btn_save_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	var validationMessage = this.fn_checkVal(); 
+    if (validationMessage) {
+        alert(validationMessage); 
+        return; 
+    }
+    
+    var result = application.confirm("정말로 저장하시겠습니까?","TEST","warning");
+	if (result) {
+		this.fn_saveFn();
+	} else {
+		trace("저장 작업 취소");
+	}
+}
+this.fn_checkVal = function() {
+	var categoryId = this.ds_regist.getColumn(0, "CATEGORY_NAME");
+	var productId = this.ds_regist.getColumn(0, "PRODUCT_NAME");
+	var amount = this.ds_regist.getColumn(0, "AMOUNT");
+	var minQuantity = this.ds_quantity.getColumn(0, "MIN_QUANTITY");
+	
+	
+	minQuantity = parseFloat(minQuantity.replace(/,/g, ''));
+	// 음수 기호를 포함하여 숫자만 허용
+    if (amount.charAt(0) === '-') {
+        amount = '-' + amount.replace(/[^0-9]/g, ''); // 첫 글자가 '-'일 때
+    } else {
+        amount = amount.replace(/[^0-9]/g, ''); // 음수 기호가 아닐 때
+    }
+    
+    amount = parseFloat(amount) || 0; // 숫자로 변환
+	
+    if (!categoryId || categoryId == 0) {
+        return "카테고리란을 선택해 주세요."; 
+    }
+    if (!productId || productId == 0) {
+        return "상품란을 선택해 주세요."; 
+    }
+    if (!amount || amount == 0) {
+        return "수량을 입력해 주세요."; 
+    }
+    if (amount+minQuantity < 0) {
+		return "상품이 부족한 창고가 존재합니다.";
+    }
+    
+    return null;
+}
+this.fn_saveFn = function() {
+	var strSvcId = "batchRegist";
+	var strSvcUrl = "http://localhost:8080/batchRegist";
+	var inData = "inDataset=ds_regist"
+	var outData = "";
+	var strAvg = "";
+	var callBackFnc = "fn_CallbackBatchRegist";
+	
+	this.transaction(strSvcId, strSvcUrl, inData, outData, strAvg, callBackFnc);
+}
+this.fn_CallbackBatchRegist = function(strSvcId, nErrorCode, strErrorMsg) {
+	if(nErrorCode == 0) {
+		this.close();
+		if(this.opener && typeof this.opener.div_top_search_btn_onclick === 'function') {
+			alert("수량이 일괄 변경되었습니다.");
+			this.opener.div_top_search_btn_onclick();
+		}
+	} else if(nErrorCode == 1) {
+		alert("상품을 가지고 있는 창고가 존재하지 않습니다.")
+	}
+}
+this.Div04_edt_amount_ontextchanged = function(obj:Edit, e:nexacro.TextChangedEventInfo)
+{
+	var rawValue = obj.value.replace(/,/g, ''); // 기존의 천 단위 구분 기호 제거
+    // 숫자와 '-'만 허용
+    rawValue = rawValue.replace(/[^0-9-]/g, ''); 
+    var firstRawValue = rawValue.indexOf('-')
+    
+    // '-'가 여러 개일 경우 첫 번째 것만 남기고 나머지는 제거
+    if (firstRawValue !== -1) {
+        rawValue = rawValue.substring(0, firstRawValue + 1) + rawValue.replace(/-/g, '');
+    }
+    
+    // 빈 문자열이면 그대로 반환
+    if (rawValue === '') {
+        obj.set_value('');
+        return;
+    }
+    
+    // 음수 처리: 맨 앞에 '-'가 있는 경우
+    var isNegative = false;
+    if (rawValue.charAt(0) === '-') {
+        isNegative = true;
+        rawValue = rawValue.substring(1); // '-' 제거
+    }
+    
+    // 천 단위 구분 기호를 추가
+    var formattedValue = '';
+    var length = rawValue.length;
+    var counter = 0;
+
+    for (var i = length - 1; i >= 0; i--) {
+        // 현재 문자를 앞에 추가
+        formattedValue = rawValue.charAt(i) + formattedValue;
+        counter++;
+
+        // 천 단위 구분 기호를 추가
+        if (counter % 3 === 0 && i !== 0) {
+            formattedValue = ',' + formattedValue;
+        }
+    }
+    
+    // 음수 기호 추가
+    if (isNegative) {
+        formattedValue = '-' + formattedValue;
+    }
+
+    // 포맷팅된 값을 입력 필드에 설정
+    obj.set_value(formattedValue);
+}
+]]></Script>
+  </Form>
+</FDL>
